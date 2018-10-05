@@ -5,30 +5,32 @@ import datetime
 import os
 import shutil
 
-# Save logs, print messages in terminal
+# PRINT MESSAFGES IN THE TERMINAL
 
 sys.stdout = open('/dev/stdout', 'w')
 
 print('Printing messages to terminal')
 
+
 '''
-Setup paths to data and folders
+SETUP FOLDERS AND PATHS FOR all_xml_files
+
 '''
 
-# Original data
+# all_xml_files url
 file_to_download = 'https://clinicaltrials.gov/AllPublicXML.zip'
 
-# Paths for folders to store data
-path_zip_file = '../data/zip'
+# Paths for folders to store all_xml_files
+path_zip_file = '../all_xml_files/zip'
 
-path_for_download = "../data/zip/AllPublicXML.zip"
+path_for_download = "../all_xml_files/zip/AllPublicXML.zip"
 
-path_dest_unzip = '../data/unzip/'
+path_dest_unzip = '../all_xml_files/unzip/'
 
-path_all_trials = '../data/all_trials/'
+path_all_trials = '../all_xml_files/all_trials/'
 
-# Create folders for data
 
+# Create folders
 
 def create_folders(paths=[]):
     for p in paths:
@@ -49,7 +51,10 @@ all_folders = [path_zip_file, path_for_download, path_dest_unzip, path_all_trial
 create_folders(all_folders)
 
 
-# Save zip file from clinicaltrials.gov into zip folder
+'''
+SAVE ZIP FILE FROM CLINICALTRIALS.GOV IN THE ZIP FOLDER
+
+'''
 
 print('Beginning file download with wget module')
 
@@ -57,20 +62,24 @@ url = 'https://clinicaltrials.gov/AllPublicXML.zip'
 wget.download(url, path_for_download)
 
 now = datetime.datetime.now()
-current_download = ('\nData downloaded from clinicaltrials.gov on {}\n'.format(now.strftime("%Y-%m-%d %H:%M")))
+date_format = now.strftime("%Y-%m-%d %H:%M")
+current_download = ('\nall_xml_files downloaded on {}\n'.format(date_format))
 
 print(current_download)
 
 
-# Unzip bulk download from clinicaltrials.gov
+'''
+UNZIP BULF DOWNLOAD
+
+'''
 
 bulk_file = '/AllPublicXML.zip'
 
 
 def unzip_file(f, dest):
     print("Unzipping file...")
-    data_zip = zipfile.ZipFile(f)
-    data_zip.extractall(dest)
+    all_xml_files_zip = zipfile.ZipFile(f)
+    all_xml_files_zip.extractall(dest)
     print('----{} unzipped in {}----'.format(f, dest))
 
 
@@ -78,7 +87,7 @@ unzip_file(path_for_download + bulk_file, path_dest_unzip)
 
 
 '''
-Basic checks & info on files
+Basic checks on files
 '''
 
 # Number of folders
@@ -102,16 +111,17 @@ def list_files(dir):
     return r
 
 
-data = list_files(path_dest_unzip)
+all_xml_files = list_files(path_dest_unzip)
 
-print("Number of trials: " + str(len(data) - 1))
+print("Number of trials: " + str(len(all_xml_files) - 1))
 
 
 '''
-Move all xml files into a folder
+MOVE ALL XML FILES INTO A SINGLE FOLDER
+
 '''
 
-for d in data:
+for d in all_xml_files:
     try:
         if d.endswith('.xml'):
             shutil.move(d, path_all_trials)
@@ -149,5 +159,3 @@ try:
 except IOError as e:
     print(e)
     pass
-
-
