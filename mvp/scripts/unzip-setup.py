@@ -9,7 +9,7 @@ import shutil
 
 sys.stdout = open('/dev/stdout', 'w')
 
-print('Printing messages to terminal')
+print('\n-- Printing messages to terminal --\n')
 
 
 '''
@@ -21,13 +21,14 @@ SETUP FOLDERS AND PATHS FOR all_xml_files
 file_to_download = 'https://clinicaltrials.gov/AllPublicXML.zip'
 
 # Paths for folders to store all_xml_files
-path_zip_file = '../all_xml_files/zip'
 
-path_for_download = "../all_xml_files/zip/AllPublicXML.zip"
+path_zip_file = os.path.abspath('../data/zip')
 
-path_dest_unzip = '../all_xml_files/unzip/'
+path_for_download = os.path.abspath('../data/zip/AllPublicXML.zip')
 
-path_all_trials = '../all_xml_files/all_trials/'
+path_dest_unzip = os.path.abspath('../data/unzip/')
+
+path_all_trials = os.path.abspath('../data/all_trials/')
 
 
 # Create folders
@@ -56,9 +57,10 @@ SAVE ZIP FILE FROM CLINICALTRIALS.GOV IN THE ZIP FOLDER
 
 '''
 
-print('Beginning file download with wget module')
+print('Beginning file download from clinicaltrials.gov\n')
 
 url = 'https://clinicaltrials.gov/AllPublicXML.zip'
+
 wget.download(url, path_for_download)
 
 now = datetime.datetime.now()
@@ -77,10 +79,10 @@ bulk_file = '/AllPublicXML.zip'
 
 
 def unzip_file(f, dest):
-    print("Unzipping file...")
+    print("Unzipping file...\n")
     all_xml_files_zip = zipfile.ZipFile(f)
     all_xml_files_zip.extractall(dest)
-    print('----{} unzipped in {}----'.format(f, dest))
+    print('\n----{} unzipped in:\n{}----\n'.format(f, dest))
 
 
 unzip_file(path_for_download + bulk_file, path_dest_unzip)
@@ -97,8 +99,8 @@ folders = []
 for i in os.listdir(path_dest_unzip):
     folders.append(i)
 
-print("Number of folders: " + str(len(folders)))
-print("First 5 folders: " + str(folders[0:5]))
+print("\nNumber of folders: {}\n".format(folders))
+print("\nFirst 5 folders: {}\n".format(folders[0:5]))
 
 
 # Calculate number of trials in unzipped file
@@ -113,7 +115,7 @@ def list_files(dir):
 
 all_xml_files = list_files(path_dest_unzip)
 
-print("Number of trials: " + str(len(all_xml_files) - 1))
+print("\nNumber of trials: {}".format() + str(len(all_xml_files) - 1))
 
 
 '''
@@ -129,7 +131,7 @@ for d in all_xml_files:
         print(e)
         pass
 
-print(str("Files moved to {}".format(path_all_trials)))
+print("\nFiles moved to {}".format(path_all_trials))
 
 
 # Get all_trials numbers & size
@@ -147,7 +149,7 @@ def get_size(start_path):
     return total_size / 1000000000
 
 
-print("All_Trials folder: " + str(round(get_size(path_all_trials), 2)) + " Gb")
+print("\nAll_Trials folder: " + str(round(get_size(path_all_trials), 2)) + " Gb")
 print(records[0:5])
 
 
@@ -155,7 +157,7 @@ print(records[0:5])
 
 try:
     shutil.rmtree(path_dest_unzip)
-    print("unzip folder deleted")
+    print("\nunzip folder deleted")
 except IOError as e:
     print(e)
     pass
