@@ -129,6 +129,8 @@ print('Dictionary created')
 
 all_data_dictionary.setdefault('condition', [])
 
+print('\nParsing conditions\n')
+
 for n in all_parsed_files:
         value_conditions = n.find('condition')
         if n.find('condition') is not None:
@@ -136,6 +138,8 @@ for n in all_parsed_files:
         else:
             all_data_dictionary['condition'].append('None')
 
+
+print('\nChecking values by key\n')
 
 # Check number of values by key
 for key, value in all_data_dictionary.items():
@@ -154,6 +158,8 @@ print('\nCreated path to json file\n')
 
 
 # Dump dictionary into a JSON file
+print('\nExporting data to json file\n')
+
 with open('{}{}.json'.format(path_to_json_file, json_file), 'w') as fp:
     json.dump(all_data_dictionary, fp)
     print('JSON file created\n')
@@ -161,3 +167,5 @@ with open('{}{}.json'.format(path_to_json_file, json_file), 'w') as fp:
     fl = path_to_json_file + json_file
     json_size = round(os.path.getsize(fl + '.json') / 1000000, 2)
     print("JSON file: {} Mb".format(json_size))
+
+print('\nSCRIPT COMPLETED\n')
