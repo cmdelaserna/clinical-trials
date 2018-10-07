@@ -63,7 +63,7 @@ Slow. Checks for xml files
 
 def parse_xml_files(path_to_folder):
     for filename in os.listdir(path_to_folder):
-        if not filename.endswith('.xml'): continue
+        # if not filename.endswith('.xml'): continue
         fullname = os.path.join(path_to_folder, filename)
         all_parsed_files.append(ET.parse(fullname).getroot())
 
