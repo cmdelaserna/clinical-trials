@@ -76,7 +76,7 @@ def parse_xml_files(path_to_folder):
 
 
 # Run parse_xml_files function
-all_parsed_files.clear()
+# all_parsed_files.clear()
 parse_xml_files(path_to_all_xml_trials)
 
 
@@ -124,19 +124,39 @@ print('\n-----------------\n')
 print('Dictionary created')
 
 
+# Function for adding new tag
+
+def add_new_tags(new_key):
+    all_data_dictionary.setdefault(new_key, [])
+
+    for n in all_parsed_files:
+            value_conditions = n.find(new_key)
+            if n.find(new_key) is not None:
+                all_data_dictionary[new_key].append(value_conditions.text)
+            else:
+                all_data_dictionary[new_key].append('None')
+
+    print('{} tag added'.format(new_key))
+
+
+add_new_tags('condition')
+add_new_tags('url')
+add_new_tags('detailed_description/textblock')
+add_new_tags('brief_summary/textblock')
+
 # Append first condition to dictionary
 # Add Nan for missing values
 
-all_data_dictionary.setdefault('condition', [])
+# all_data_dictionary.setdefault('condition', [])
 
-print('\nParsing conditions\n')
+# print('\nParsing conditions\n')
 
-for n in all_parsed_files:
-        value_conditions = n.find('condition')
-        if n.find('condition') is not None:
-            all_data_dictionary['condition'].append(value_conditions.text)
-        else:
-            all_data_dictionary['condition'].append('None')
+# for n in all_parsed_files:
+#         value_conditions = n.find('condition')
+#         if n.find('condition') is not None:
+#             all_data_dictionary['condition'].append(value_conditions.text)
+#         else:
+#             all_data_dictionary['condition'].append('None')
 
 
 print('\nChecking values by key\n')
