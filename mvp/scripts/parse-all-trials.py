@@ -189,3 +189,5 @@ with open('{}{}.json'.format(path_to_json_file, json_file), 'w') as fp:
     print("JSON file: {} Mb".format(json_size))
 
 print('\nSCRIPT COMPLETED\n')
+
+break
