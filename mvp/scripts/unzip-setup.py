@@ -16,19 +16,26 @@ print('\n-- Printing messages to terminal --\n')
 SETUP FOLDERS AND PATHS FOR all_xml_files
 
 '''
-# Create folders
+# all_xml_files url
+file_to_download = 'https://clinicaltrials.gov/AllPublicXML.zip'
+
+# Paths for folders to store all_xml_files
+
+path_zip_file = os.path.abspath('../data/zip')
+path_for_download = os.path.abspath('../data/zip/AllPublicXML.zip')
+path_dest_unzip = os.path.abspath('../data/unzip/')
+path_all_trials = os.path.abspath('../data/all_trials/')
+
+all_folders = [path_zip_file, path_for_download, path_dest_unzip, path_all_trials]
+
+bulk_file = '/AllPublicXML.zip'
+
+
+'''
+FUNCTIONS
+'''
 
 def create_folders(paths=[]):
-    # all_xml_files url
-    file_to_download = 'https://clinicaltrials.gov/AllPublicXML.zip'
-
-    # Paths for folders to store all_xml_files
-
-    path_zip_file = os.path.abspath('../data/zip')
-    path_for_download = os.path.abspath('../data/zip/AllPublicXML.zip')
-    path_dest_unzip = os.path.abspath('../data/unzip/')
-    path_all_trials = os.path.abspath('../data/all_trials/')
-
     for p in paths:
         try:
             os.mkdir(p)
@@ -40,7 +47,6 @@ def create_folders(paths=[]):
 
     print('\nSetup folders created\n')
 
-    all_folders = [path_zip_file, path_for_download, path_dest_unzip, path_all_trials]
 
 '''
 SAVE ZIP FILE FROM CLINICALTRIALS.GOV IN THE ZIP FOLDER
@@ -64,7 +70,6 @@ UNZIP BULF DOWNLOAD
 
 '''
 def unzip_file(f, dest):
-    bulk_file = '/AllPublicXML.zip'
     print("Unzipping file...\n")
     all_xml_files_zip = zipfile.ZipFile(f)
     all_xml_files_zip.extractall(dest)
@@ -86,8 +91,9 @@ def check_files():
 
 
 # Calculate number of trials in unzipped file
+# Move files
 
-def calculate_number_trials():
+def move_files():
     def list_files(dir):
         r = []
         for root, dirs, files in os.walk(dir):
@@ -98,13 +104,9 @@ def calculate_number_trials():
 
     all_xml_files = list_files(path_dest_unzip)
 
-    print("\nNumber of trials: {}".format() + str(len(all_xml_files) - 1))
+    print("\nNumber of trials: {}".format(len(all_xml_files)))
 
-'''
-MOVE ALL XML FILES INTO A SINGLE FOLDER
-
-'''
-def move_xml_files():
+    # Move all_xml_files
     for d in all_xml_files:
         try:
             if d.endswith('.xml'):
@@ -114,6 +116,7 @@ def move_xml_files():
             pass
 
     print("\nFiles moved to {}".format(path_all_trials))
+
 
 # Get all_trials numbers & size
 
@@ -145,12 +148,20 @@ def remove_extra_folders():
         pass
 
 
-#RUN SCRIPT
+# __MAIN__
+
 create_folders(all_folders)
+
 save_zip_file()
+
 unzip_file(path_for_download + bulk_file, path_dest_unzip)
+
 check_files()
-calculate_number_trials()
-move_xml_files()
+
+move_files()
+
 get_trials_size()
+
 remove_extra_folders()
+
+
