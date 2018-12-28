@@ -185,7 +185,7 @@ print('\n-----------------\n')
 print('Adding tags')
 
 add_new_tags('condition')
-add_new_tags('url')
+# add_new_tags('url')
 add_new_tags('detailed_description/textblock')
 add_new_tags('brief_summary/textblock')
 
