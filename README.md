@@ -1,6 +1,6 @@
 # clinical-trials
 
-## Current workflow: 
+### Current workflow: 
 - Download bulk zip data [script 1]
 - Unzip file [script 1]
 - Save all xml files in a single folder [script 1]
