@@ -185,9 +185,13 @@ print('\n-----------------\n')
 print('Adding tags')
 
 add_new_tags('condition')
-# add_new_tags('url')
+add_new_tags('condition_browse/mesh_term')
+add_new_tags('intervention_browse/mesh_term')
 add_new_tags('detailed_description/textblock')
 add_new_tags('brief_summary/textblock')
+add_new_tags('location/facility/address/city')
+add_new_tags('location/facility/address/country')
+add_new_tags('location/facility/address/zip')
 
 check_values_key()
 
