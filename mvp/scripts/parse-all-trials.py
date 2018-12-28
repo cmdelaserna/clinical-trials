@@ -172,7 +172,7 @@ def create_json_file():
 create_folders(all_folders)
 parse_xml_files(path_to_all_xml_trials)
 
-# Execute function only with unique values
+# Execute function for tags with single values
 create_dictionary_from_tag('nct_id')
 create_dictionary_from_tag('study_first_submitted')
 create_dictionary_from_tag('source')
