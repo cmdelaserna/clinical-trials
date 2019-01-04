@@ -16,19 +16,13 @@ Create paths and folders
 # Folders with xml files
 path_to_all_xml_trials = os.path.abspath('../data/all_trials/')
 
-# Test folder ~100 files
-path_to_test_folder = os.path.abspath('../data/test/')
-
-# Remove old files from test folder
-shutil.rmtree(path_to_test_folder)
-
 # Path for json folder
 path_to_json_file = os.path.abspath('../data/json/')
 
 # Variable for all parsed files
 all_parsed_files = []
 
-all_folders = [path_to_all_xml_trials, path_to_test_folder, path_to_json_file]
+all_folders = [path_to_all_xml_trials, path_to_json_file]
 
 print('\n-------------------------\n')
 print('\nPaths and folders created\n')
