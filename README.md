@@ -20,9 +20,12 @@
 
 #### ML pipeline [script 4]
 - Load csv file
-- Transformations:
+- Clean dataset:
 	- Remove unnecesary columns
 	- Change data types
 	- Remove records before 2008
 	- Save all conditions, sources and mesh_terms in lists for labeling
 	- Check terms in lists for labeling
+	- Create new column with title + full description
+- Transformations: 
+	[Science Surveyor]
