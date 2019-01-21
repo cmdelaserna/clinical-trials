@@ -15,7 +15,7 @@
 #### Dataframe setup [script 3]
 - Import JSON file, clean and rename columns
 - Add dates columns
-- Select data since 2008
+- Select data since 2008 (*not working)
 - Export data as csv
 
 #### ML pipeline [script 4]
@@ -29,4 +29,5 @@
 	- Create new column with title + full description
 - Transformations: 
 	- Text-processing: lowercasing, lemmatization, stop-word removal
+	- Disease classification 
 	- Computing tf-idf scores
