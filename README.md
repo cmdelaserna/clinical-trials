@@ -28,4 +28,5 @@
 	- Check terms in lists for labeling
 	- Create new column with title + full description
 - Transformations: 
-	[Science Surveyor]
+	- Text-processing: lowercasing, lemmatization, stop-word removal
+	- Computing tf-idf scores
