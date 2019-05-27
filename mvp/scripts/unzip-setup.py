@@ -21,12 +21,13 @@ file_to_download = 'https://clinicaltrials.gov/AllPublicXML.zip'
 
 # Paths for folders to store all_xml_files
 
+data_file = os.path.abspath('../data')
 path_zip_file = os.path.abspath('../data/zip')
 path_for_download = os.path.abspath('../data/zip/AllPublicXML.zip')
 path_dest_unzip = os.path.abspath('../data/unzip/')
 path_all_trials = os.path.abspath('../data/all_trials/')
 
-all_folders = [path_zip_file, path_for_download, path_dest_unzip, path_all_trials]
+all_folders = [data_file, path_zip_file, path_for_download, path_dest_unzip, path_all_trials]
 
 bulk_file = '/AllPublicXML.zip'
 

@@ -2,14 +2,14 @@
 
 ### Current workflow: 
 #### Raw Data  [script 1]
-- Download bulk zip data
+- Download bulk zip data from clinicaltrials.gov
 - Unzip file
 - Save all xml files in a single folder
 
 #### Parse files, export a single JSON file [script 2]
 - Parse files
 - Extract tags with single values
-- Add tags with several values
+- Add tags with several possible values
 - Dump results in a JSON file
 
 #### Dataframe setup [script 3]
