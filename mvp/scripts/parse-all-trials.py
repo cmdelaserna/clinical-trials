@@ -71,7 +71,7 @@ Export them to a json file
 
 all_data_dictionary = {}
 print('\n-------------------------\n')
-print('\nCreated al_data_dictionary\n')
+print('\nCreated all_data_dictionary\n')
 
 def create_dictionary_from_tag(tag, parsed_files = all_parsed_files, name_dictionary = all_data_dictionary):
 
@@ -110,21 +110,7 @@ def add_new_tags(new_key):
                 all_data_dictionary[new_key].append('None')
 
     print('{} tag added'.format(new_key))
-
-
-# Append first condition to dictionary
-# Add Nan for missing values
-
-# all_data_dictionary.setdefault('condition', [])
-
-# print('\nParsing conditions\n')
-
-# for n in all_parsed_files:
-#         value_conditions = n.find('condition')
-#         if n.find('condition') is not None:
-#             all_data_dictionary['condition'].append(value_conditions.text)
-#         else:
-#             all_data_dictionary['condition'].append('None')
+    
 
 
 def check_values_key():

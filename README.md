@@ -6,13 +6,17 @@
 - Unzip file
 - Save all xml files in a single folder
 
-—pending debugging—
+[to add: logs, including date of data download]
+
+—Script 2 debugged in notebook. Pending editing of the final script-
 
 #### Parse files, export a single JSON file [script 2]
 - Parse files
 - Extract tags with single values
 - Add tags with several possible values
 - Dump results in a JSON file
+
+-Next: Test in notebook- 
 
 #### Dataframe setup [script 3]
 - Import JSON file, clean and rename columns
