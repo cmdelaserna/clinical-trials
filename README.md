@@ -6,6 +6,8 @@
 - Unzip file
 - Save all xml files in a single folder
 
+—pending debugging—
+
 #### Parse files, export a single JSON file [script 2]
 - Parse files
 - Extract tags with single values
