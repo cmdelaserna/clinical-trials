@@ -8,7 +8,6 @@ import shutil
 # PRINT MESSAFGES IN THE TERMINAL
 
 sys.stdout = open('/dev/stdout', 'w')
-
 print('\n-- Printing messages to terminal --\n')
 
 
