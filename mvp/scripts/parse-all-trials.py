@@ -162,11 +162,10 @@ Export dataframe as json file
 def data_df_json(all_data):
     df = pd.DataFrame(dict([(k,pd.Series(v)) for k,v in all_data.items()]))
 
-    print('Dataframe shape: \n'{}.df.shape)
+    print('Dataframe shape: \n')
+    print(df.shape)
 
     df.to_json('../data/json/all_parsed_data_json.json')
-
-    print('Dataframe shape: \n'{}.df.shape)
 
 
 # Run create folders function

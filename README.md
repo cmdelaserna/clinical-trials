@@ -1,16 +1,19 @@
 # clinical-trials
 
 ### Current workflow: 
+
 #### Raw Data  [script 1]
+[time required:  ]
 - Download bulk zip data from clinicaltrials.gov
 - Unzip file
 - Save all xml files in a single folder
 
 [to add: logs, including date of data download]
 
-—Script 2 debugged in notebook. Pending editing of the final script-
+—Next: run and test script, measure time required
 
 #### Parse files, export a single JSON file [script 2]
+[time required: 9.22pm - ]
 - Parse files
 - Extract tags with single values
 - Add tags with several possible values
