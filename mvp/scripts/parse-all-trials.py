@@ -7,6 +7,7 @@ import os
 import xml.etree.ElementTree as ET
 import shutil
 import sys
+import pandas as pd
 
 
 '''
@@ -16,6 +17,9 @@ Create paths and folders
 # Folders with xml files
 path_to_all_xml_trials = os.path.abspath('../data/all_trials/')
 
+# for testing
+# path_to_sample_of_xml_trials = os.path.abspath('../data/sample_trials/')
+
 # Path for json folder
 path_to_json_file = os.path.abspath('../data/json/')
 
@@ -23,6 +27,9 @@ path_to_json_file = os.path.abspath('../data/json/')
 all_parsed_files = []
 
 all_folders = [path_to_all_xml_trials, path_to_json_file]
+
+# for testing
+# all_folders = [path_to_sample_of_xml_trials, path_to_json_file]
 
 print('\n-------------------------\n')
 print('\nPaths and folders created\n')
@@ -125,27 +132,41 @@ Export dictionary to json file
 '''
 
 # Final json file
-def create_json_file():
-    json_file = '/all_trials_json'
+# def create_json_file():
+#     json_file = '/all_trials_json'
 
-    print('\n-------------------------\n')
-    print('\nCreated path to json file\n')
+#     print('\n-------------------------\n')
+#     print('\nCreated path to json file\n')
 
 
-    # Dump dictionary into a JSON file
-    print('\nExporting data to json file\n')
+#     # Dump dictionary into a JSON file
+#     print('\nExporting data to json file\n')
 
-    with open('{}{}.json'.format(path_to_json_file, json_file), 'w') as fp:
-        json.dump(all_data_dictionary, fp)
-        print('JSON file created\n')
+#     with open('{}{}.json'.format(path_to_json_file, json_file), 'w') as fp:
+#         json.dump(all_data_dictionary, fp)
+#         print('JSON file created\n')
 
-        fl = path_to_json_file + json_file
-        json_size = round(os.path.getsize(fl + '.json') / 1000000, 2)
-        print("JSON file: {} Mb".format(json_size))
+#         fl = path_to_json_file + json_file
+#         json_size = round(os.path.getsize(fl + '.json') / 1000000, 2)
+#         print("JSON file: {} Mb".format(json_size))
 
-    print('\nSCRIPT COMPLETED\n')
+#     print('\nSCRIPT COMPLETED\n')
 
-    sys.exit()
+#     sys.exit()
+
+'''
+Save all data parsed in a dictionary into a dataframe. 
+Export dataframe as json file
+'''
+
+def data_df_json(all_data):
+    df = pd.DataFrame(dict([(k,pd.Series(v)) for k,v in all_data.items()]))
+
+    print('Dataframe shape: \n'{}.df.shape)
+
+    df.to_json('../data/json/all_parsed_data_json.json')
+
+    print('Dataframe shape: \n'{}.df.shape)
 
 
 # Run create folders function
@@ -158,8 +179,12 @@ create_dictionary_from_tag('study_first_submitted')
 create_dictionary_from_tag('source')
 create_dictionary_from_tag('brief_title')
 create_dictionary_from_tag('overall_status')
-create_dictionary_from_tag('phase')
 create_dictionary_from_tag('verification_date')
+create_dictionary_from_tag('study_type')
+create_dictionary_from_tag('study_first_posted')
+create_dictionary_from_tag('last_update_submitted')
+create_dictionary_from_tag('last_update_posted')
+create_dictionary_from_tag('phase')
 
 print('\n-----------------\n')
 print('Dictionary created')
@@ -175,8 +200,21 @@ add_new_tags('brief_summary/textblock')
 add_new_tags('location/facility/address/city')
 add_new_tags('location/facility/address/country')
 add_new_tags('location/facility/address/zip')
+add_new_tags('sponsors/lead_sponsor/agency')
+add_new_tags('sponsors/lead_sponsor/agency_class')
+add_new_tags('study_design_info/allocation')
+add_new_tags('study_design_info/intervention_model')
+add_new_tags('study_design_info/primary_purpose')
 
 check_values_key()
 
-create_json_file()
+# create_json_file()
+
+data_df_json(all_data_dictionary)
+
+print('\nSCRIPT COMPLETED\n')
+
+sys.exit()
+
+
 
