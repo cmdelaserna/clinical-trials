@@ -10,7 +10,10 @@
 
 [to add: logs, including date of data download]
 
-—Next: run and test script, measure time required
+Pending: 
+- timeit
+- Archive old files
+- Save log of basic data: download date and time
 
 #### Parse files, export a single JSON file [script 2]
 [time required: 9.22pm - ]
@@ -19,7 +22,9 @@
 - Add tags with several possible values
 - Dump results in a JSON file
 
--Next: Test in notebook- 
+Pending:
+- test script with all data
+- timeit
 
 #### Dataframe setup [script 3]
 - Import JSON file, clean and rename columns
