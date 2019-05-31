@@ -162,7 +162,7 @@ Export dataframe as json file
 def data_df_json(all_data):
     df = pd.DataFrame(dict([(k,pd.Series(v)) for k,v in all_data.items()]))
 
-    print('Dataframe shape: \n')
+    print('\nDataframe shape: \n')
     print(df.shape)
 
     df.to_json('../data/json/all_parsed_data_json.json')
@@ -205,7 +205,7 @@ add_new_tags('study_design_info/allocation')
 add_new_tags('study_design_info/intervention_model')
 add_new_tags('study_design_info/primary_purpose')
 
-check_values_key()
+# check_values_key()
 
 # create_json_file()
 
