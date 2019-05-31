@@ -15,7 +15,7 @@ Pending:
 - Save log of basic data: download date and time
 
 #### Parse XML files, export all data as a single JSON file [script 2]
-[time required: ]
+[time required: 2h20m ]
 - Parse files
 - Extract tags with single values
 - Add tags with several possible values
@@ -23,7 +23,6 @@ Pending:
 - Dump results in a JSON file
 
 Pending:
-- test script with all data
 - timeit
 
 #### ML analysis[script 3]
