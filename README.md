@@ -1,5 +1,13 @@
 # clinical-trials
 
+
+### Data sources:
+- clinicaltrials.gov bulk download
+- Medline Plus (https://medlineplus.gov/xml.html)
+- Unified Medical Language (https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html)
+- Wikidocs
+
+
 ### Current workflow: 
 
 #### Raw Data  [script 1]
