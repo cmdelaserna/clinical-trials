@@ -33,7 +33,9 @@ Pending:
 Pending:
 - timeit
 
-#### ML analysis[script 3]
+#### Shell script: import JSON file into ElasticSearch [script 3]
+
+#### ML analysis[script 4]. PENDING
 - Clean dataset:
 	- Import JSON file, clean and rename columns
 	- Add dates columns
