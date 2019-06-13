@@ -8,9 +8,9 @@
 - Wikidocs
 
 
-### Current workflow: 
+### Workflow: 
 
-#### Raw Data  [script 1]
+#### Script 1: Raw Data
 [time required:  ]
 - Bulk download (zip file) from clinicaltrials.gov
 - Unzip file
@@ -22,7 +22,7 @@ Pending:
 - Archive old files
 - Save log of basic data: download date and time
 
-#### Parse XML files, export all data as a single JSON file [script 2]
+#### Script 2: Parse XML files, export all data as a single JSON file
 [time required: 2h20m ]
 - Parse files
 - Extract tags with single values
@@ -33,20 +33,17 @@ Pending:
 Pending:
 - timeit
 
-#### Shell script: import JSON file into ElasticSearch [script 3]
-
-#### ML analysis[script 4]. PENDING
+#### Script 3: Clean JSON file, preprocess data
 - Clean dataset:
-	- Import JSON file, clean and rename columns
+	- Clean and rename columns
 	- Add dates columns
-	- Remove unnecesary columns
+	- Remove unnecesary columns and symbols (whitespace, /n)
 	- Change data types
-	- Remove records before 2008
-	- Save all conditions, sources and mesh_terms in lists for labeling
-	- Check terms in lists for labeling
-	- Create new column with title + full description
-- Transformations: 
-	- Text-processing: lowercasing, lemmatization, stop-word removal
-	- Disease classification 
+	- Create new column with all_text. Lowercase
+- ML pre-process: 
+	- Entity extraction (Scispacy) 
 	- Computing tf-idf scores
+- Remove unnecesary columns. 
+- Export working dataset
 
+#### Script 4: Search and visualize results
