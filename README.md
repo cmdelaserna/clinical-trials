@@ -33,7 +33,11 @@ Pending:
 Pending:
 - timeit
 
+<<<<<<< Updated upstream
 #### Script 3: Clean JSON file, preprocess data
+=======
+#### ML analysis[script 3]. PENDING
+>>>>>>> Stashed changes
 - Clean dataset:
 	- Clean and rename columns
 	- Add dates columns
