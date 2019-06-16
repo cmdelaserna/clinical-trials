@@ -17,7 +17,7 @@
 - Save all xml files in a single folder
 - Cleanup folder
 
-Pending: 
+to-do: 
 - timeit
 - Archive old files
 - Save log of basic data: download date and time
@@ -30,24 +30,31 @@ Pending:
 - Import dictionary in a dataframe
 - Dump results in a JSON file
 
-Pending:
+to-do:
 - timeit
 
-<<<<<<< Updated upstream
 #### Script 3: Clean JSON file, preprocess data
-=======
-#### ML analysis[script 3]. PENDING
->>>>>>> Stashed changes
-- Clean dataset:
-	- Clean and rename columns
-	- Add dates columns
-	- Remove unnecesary columns and symbols (whitespace, /n)
-	- Change data types
-	- Create new column with all_text. Lowercase
-- ML pre-process: 
-	- Entity extraction (Scispacy) 
-	- Computing tf-idf scores
+- Clean and rename columns
+- Add dates columns
+- Change data types
+- Remove /n
+- Create new column with all_text. Lowercase. Remove extra whitespace
 - Remove unnecesary columns. 
 - Export working dataset
 
+to-do:
+- Export dataset
+
 #### Script 4: Search and visualize results
+- Search: match in all_text
+- Curate context for search
+	- Lemmatize
+	- Countvectorizer
+	- tf-idf
+	- Calculate similarity between documents
+- Visualize results
+	- Timeline of documents. Stack by phases
+	- Summary of data:
+		- Main words
+		- Blocks of documents (used similarity)
+		- Networks of documents (similarity)
