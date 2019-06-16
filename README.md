@@ -40,18 +40,18 @@ to-do:
 - Remove /n
 - Create new column with all_text. Lowercase. Remove extra whitespace
 - Remove unnecesary columns. 
-- Export working dataset
+- Export working datasets
 
 to-do:
 - Export dataset
 
 #### Script 4: Search and visualize results
+- Store datasets in SQL db
 - Search: match in all_text
 - Curate context for search
-	- Lemmatize
 	- Countvectorizer
 	- tf-idf
-	- Calculate similarity between documents
+	- Similarity between documents
 - Visualize results
 	- Timeline of documents. Stack by phases
 	- Summary of data:
