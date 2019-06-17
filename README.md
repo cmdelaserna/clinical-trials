@@ -40,13 +40,11 @@ to-do:
 - Remove /n
 - Create new column with all_text. Lowercase. Remove extra whitespace
 - Remove unnecesary columns. 
-- Export working datasets
+- Export all_trials and word_counts datasets to sqlite database
 
-to-do:
-- Export dataset
 
 #### Script 4: Search and visualize results
-- Store datasets in SQL db
+- Fetch data from sqlite db
 - Search: match in all_text
 - Curate context for search
 	- Countvectorizer
