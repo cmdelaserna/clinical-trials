@@ -22,24 +22,27 @@ DATABASE = '../data/working_data/database.db'
 @app.route('/')
 @app.route('/index')
 def index():
-	conn = sqlite3.connect(DATABASE)
-	df = pd.read_sql_query("SELECT * FROM all_trials LIMIT 1", conn)
-	return render_template('index.html', data = df.to_html())
+	return render_template('index.html')
 
-@app.route('/result',methods = ['POST', 'GET'])
-def result():
+@app.route('/result', methods = ['GET', 'POST'])
+def search():
    if request.method == 'POST':
-      result = request.form
+      search = request.form
 
-      # conn = sqlite3.connect(DATABASE)
+      conn = sqlite3.connect(DATABASE)
 
-      # first_sql = 'SELECT * FROM all_trials WHERE all_text LIKE '
-      # result_value = request.form['Search']
-      # query_string =   first_sql + str(result_value) + ' LIMIT 1'
+      # Get result and search for string match
+      # ie: # '%breast cancer%';
+      result_value = request.form['Search']
+      first_sql = "SELECT * from all_trials WHERE all_text LIKE "
+      term = "'%" + str(result_value) + "%'"
+      query_string = first_sql + term
+      print(term)
 
-      # df = pd.read_sql_query(query_string, conn)
+      # Query db and store results in df
+      df = pd.read_sql_query(query_string, conn)
 
-      return render_template("result.html",result = result)
+      return render_template("result.html", data = df, result = search)
 
 if __name__ == "__main__": app.run()
 
