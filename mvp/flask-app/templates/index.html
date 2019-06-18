@@ -1,6 +1,8 @@
 <html>
   <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/
+    jquery.min.js"></script> 
+    <script src="static/form.js"></script> 
     <title>Clinical Trials</title>
   </head>
   <body>
@@ -9,11 +11,17 @@
 
 
       <form action = "http://localhost:5000/result" method = "POST">
-         <p><input type = "text" name = "Search" placeholder= "Search" /></p>
+         <p><input type = "text" name = "Search" id = "search-input" placeholder= "Search" /></p>
          <p><input type = "submit" value = "submit" /></p>
       </form>
 
-      
+      <h2>
+      <div id="successAlert" class="alert alert-success" role="alert" style="display:none;"></div>
+      <div id="errorAlert" class="alert alert-danger" role="alert"  style="display:none;"></div>
+    </h2>
+
+
+
   
   </body>
 </html>
