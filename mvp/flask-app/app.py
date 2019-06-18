@@ -1,5 +1,4 @@
 # FLASK_APP=app.py FLASK_DEBUG=1 python -m flask run
-# Ajax https://www.makeuseof.com/tag/python-javascript-communicate-json/
 # To React: https://realpython.com/the-ultimate-flask-front-end/
 #
 #Configuration
@@ -17,12 +16,10 @@ app.config["DEBUG"] = True
 
 DATABASE = '../data/working_data/database.db'
 
-# 
 #Views
-#
 
 @app.route('/', methods = ['GET', 'POST'])
-# @app.route('/index')
+@app.route('/index')
 def index():
    return render_template('index.html')
 
@@ -43,13 +40,18 @@ def search():
 
       # Query db and store results in df
       df = pd.read_sql_query(query_string, conn)
+      number_results = len(df)
 
       # return jsonify({'data' : df.to_json()})
 
-      return render_template("result.html", data = df, result = search)
+      return render_template("result.html", 
+      	data = df, 
+      	result = search, 
+      	number = number_results)
 
    else:
-      return render_template('index.html')
+      return render_template('index.html', data = None)
+
 
 if __name__ == "__main__": app.run()
 
