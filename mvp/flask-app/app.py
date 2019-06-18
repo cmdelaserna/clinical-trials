@@ -21,7 +21,7 @@ DATABASE = '../data/working_data/database.db'
 #Views
 #
 
-@app.route('/')
+@app.route('/', methods = ['GET', 'POST'])
 # @app.route('/index')
 def index():
    return render_template('index.html')
