@@ -5,15 +5,16 @@
 #
 
 from flask import Flask, render_template, request
+from flask_wtf import FlaskForm
 import sqlite3
 import pandas as pd
-from flask_wtf import FlaskForm
+import json
+import time
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
 DATABASE = '../data/working_data/database.db'
-
 
 # 
 #Views
@@ -22,7 +23,8 @@ DATABASE = '../data/working_data/database.db'
 @app.route('/')
 @app.route('/index')
 def index():
-	return render_template('index.html')
+   return render_template('index.html')
+
 
 @app.route('/result', methods = ['GET', 'POST'])
 def search():
@@ -37,12 +39,14 @@ def search():
       first_sql = "SELECT * from all_trials WHERE all_text LIKE "
       term = "'%" + str(result_value) + "%'"
       query_string = first_sql + term
-      print(term)
 
       # Query db and store results in df
       df = pd.read_sql_query(query_string, conn)
 
       return render_template("result.html", data = df, result = search)
+
+   else:
+      return render_template('index.html')
 
 if __name__ == "__main__": app.run()
 
