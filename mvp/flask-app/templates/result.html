@@ -15,9 +15,14 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+
   <!-- FONT
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
 
   <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -27,7 +32,7 @@
 
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="icon" type="image/png" href="images/favicon.png">
+  <!-- <link rel="icon" type="image/png" href="images/favicon.png"> -->
 
 </head>
 <body>
@@ -40,13 +45,13 @@
         <h3>Trials Explorer</h3>
         <form action = "http://localhost:5000/result" method = "POST">
          <p>
-          <input type = "text" name = "Search" id = "search-input" placeholder= "Search" />
-          <input class = 'button-primary' type = "submit" value = "submit" />
+          <input type = "text" name = "Search" id = "search-input" placeholder= "new search" />
+          <input class = 'button' type = "submit" value = "submit" />
         </p>
 
         <code>
          {% for key, value in result.items() %}
-         {{key}}: {{value}} ~ {{number}} results
+         {{key}}: {{value}} ~ {{number}} entries found
          {% endfor %}
        </code>
        <hr>
