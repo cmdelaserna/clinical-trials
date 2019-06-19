@@ -20,6 +20,12 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <script src="https://d3js.org/d3.v5.min.js"></script>
 
+  # load data into d3
+  <script>
+    var chartData = {{ timeline_graph | tojson | safe }};
+    d3.json(chartData, function(d) {console.log(d)});
+  </script>
+
   <!-- FONT
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">

@@ -1,4 +1,4 @@
-# FLASK_APP=app.py FLASK_DEBUG=1 python -m flask run
+#  FLASK_APP=app.py FLASK_DEBUG=1 python -m flask run
 # To React: https://realpython.com/the-ultimate-flask-front-end/
 #
 #Configuration
