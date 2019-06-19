@@ -18,17 +18,12 @@
 
   <!-- Scripts
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <script src="https://d3js.org/d3.v5.min.js"></script>
-
-  # load data into d3
-  <script>
-    var chartData = {{ timeline_graph | tojson | safe }};
-    d3.json(chartData, function(d) {console.log(d)});
-  </script>
+  <!-- <script src="https://d3js.org/d3.v5.min.js"></script> -->
+  <script type="text/javascript" src='../static/d3js/d3.min.js'></script>
 
   <!-- FONT
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <!-- <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css"> -->
 
 
   <!-- CSS
@@ -76,7 +71,7 @@
         <div class="ten columns" style="margin-top: 0%">
 
         {% block content %}
-        {{timeline_graph}}
+        {{ timeline_graph }}
         {% endblock %}
 
         <!-- {% for _, row in data.iterrows() %}

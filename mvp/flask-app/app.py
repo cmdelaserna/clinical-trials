@@ -4,11 +4,10 @@
 #Configuration
 #
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from flask_wtf import FlaskForm
 import sqlite3
 import pandas as pd
-import json
 import time
 
 '''
@@ -25,16 +24,9 @@ FUNCTIONS
 '''
 
 
-# Views
+# Search
 
-# Index
 @app.route('/', methods = ['GET', 'POST'])
-@app.route('/index')
-def index():
-   return render_template('index.html')
-
-# Results
-@app.route('/result', methods = ['GET', 'POST'])
 def search():
    if request.method == 'POST':
       search = request.form
@@ -42,26 +34,20 @@ def search():
       #Connect to db
       conn = sqlite3.connect(DATABASE)
 
-      # Search for string match
+      # Search query
       result_value = request.form['Search']
       first_sql = "SELECT * from all_trials WHERE all_text LIKE "
       term = "'%" + str(result_value) + "%'"
       full_query_string = first_sql + term
 
-      # Query db and store results
+      # Query db
       df = pd.read_sql_query(full_query_string, conn)
-      # Data
+
+      # Store data
       number_results = len(df)
-      # Group by year
       df_year = df.groupby(['year_submitted', 'phase']).nct_id.count()
 
-      # return jsonify({'data' : df.to_json()})
-
-      return render_template("result.html", 
-      	data = df, 
-      	search = search, 
-      	number = number_results,
-         timeline_graph = df_year.to_json())
+      return jsonify({'df_year' : df_year.to_json()}, {'number_results' : number_results})
 
    else:
       return render_template('index.html', data = None)
