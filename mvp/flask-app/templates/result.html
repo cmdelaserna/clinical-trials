@@ -43,26 +43,42 @@
     <div class="row">
       <div class="twelve columns" style="margin-top: 15%">
         <h3>Trials Explorer</h3>
+
+  <!-- Form 
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
         <form action = "http://localhost:5000/result" method = "POST">
          <p>
           <input type = "text" name = "Search" id = "search-input" placeholder= "new search" />
           <input class = 'button' type = "submit" value = "submit" />
         </p>
+        </form>
 
+  <!-- Results
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+        
         <code>
          {% for key, value in result.items() %}
-         {{key}}: {{value}} ~ {{number}} entries found
+         {{value}} — {{number}} entries found
          {% endfor %}
        </code>
+       
        <hr>
 
-        {% block content %}
-        <p>{{data}}<p>
-        {% endblock %}
-      </form>
-      </div>
+     </div>
+        <class = 'u-pull-left'>
+        <div class="ten columns" style="margin-top: 0%">
+        <!-- {% for _, row in data.iterrows() %}
+          <p>{{ row['source'] }} | {{ row['brief_title'] }}</p>
+        {% endfor %} -->
+
+        {% for record in data.iterrows() %}
+        <p>{{record}}</p>
+        {% endfor %}
+      </class>
     </div>
-  </div>
+  </class>
+</div>
+</div>
 
 <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->

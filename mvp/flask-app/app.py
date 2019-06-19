@@ -41,6 +41,7 @@ def search():
       # Query db and store results in df
       df = pd.read_sql_query(query_string, conn)
       number_results = len(df)
+      df_head = df.head()
 
       # return jsonify({'data' : df.to_json()})
 
