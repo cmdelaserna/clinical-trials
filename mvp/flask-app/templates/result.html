@@ -1,4 +1,5 @@
 <!-- Doc: http://getskeleton.com/ -->
+<!-- https://realpython.com/the-ultimate-flask-front-end/ -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -57,8 +58,8 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
         
         <code>
-         {% for key, value in result.items() %}
-         {{value}} — {{number}} entries found
+         {% for key, value in search.items() %}
+         {{value}} — {{number}} clinical trials
          {% endfor %}
        </code>
        
@@ -67,13 +68,18 @@
      </div>
         <class = 'u-pull-left'>
         <div class="ten columns" style="margin-top: 0%">
+
+        {% block content %}
+        {{timeline_graph}}
+        {% endblock %}
+
         <!-- {% for _, row in data.iterrows() %}
           <p>{{ row['source'] }} | {{ row['brief_title'] }}</p>
         {% endfor %} -->
 
-        {% for record in data.iterrows() %}
+      <!--   {% for record in data.iterrows() %}
         <p>{{record}}</p>
-        {% endfor %}
+        {% endfor %} -->
       </class>
     </div>
   </class>
