@@ -50,11 +50,8 @@ to-do:
 	- Countvectorizer
 	- tf-idf
 	- Similarity between documents
-- Visualize results
-	- Timeline of documents. Stack by phases
-	- Summary of data:
-		- Main words
-		- Blocks of documents (used similarity)
-		- Networks of documents (similarity)
+- Build API structure to separate backend (data results) from front-end
+- Test workflow with simple D3 chart 
+- Define structure for Search Report
 
-		
+
