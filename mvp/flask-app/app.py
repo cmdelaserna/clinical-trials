@@ -4,7 +4,7 @@
 #Configuration
 #
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from flask_wtf import FlaskForm
 import sqlite3
 import pandas as pd
@@ -56,8 +56,6 @@ def search():
       df_year = df.groupby(['year_submitted', 'phase']).nct_id.count()
 
       # all_data = {'data': 'df', 'search': 'search', 'number': 'number_results', 'timeline_graph': 'df_year'}
-
-      # return jsonify({'data' : df.to_json()})
 
       return render_template("result.html", 
          data = df, 
