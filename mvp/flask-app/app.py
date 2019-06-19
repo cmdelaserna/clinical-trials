@@ -55,6 +55,8 @@ def search():
       # Group by year
       df_year = df.groupby(['year_submitted', 'phase']).nct_id.count()
 
+      # all_data = {'data': 'df', 'search': 'search', 'number': 'number_results', 'timeline_graph': 'df_year'}
+
       # return jsonify({'data' : df.to_json()})
 
       return render_template("result.html", 
