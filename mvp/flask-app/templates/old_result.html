@@ -1,6 +1,5 @@
 <!-- Doc: http://getskeleton.com/ -->
-<!-- d3 data: https://www.d3-graph-gallery.com/graph/basic_datamanipulation.html  -->
- <!-- D3 FILES & FLASK DATA: http://www.mydatastack.com/flaskd3part1 -->
+<!-- https://realpython.com/the-ultimate-flask-front-end/ -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +44,7 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <div class="container">
     <div class="row">
-      <div class="twelve columns" style="margin-top: 3%">
+      <div class="twelve columns" style="margin-top: 5%">
         <h5>Trials Explorer</h5>
 
   <!-- Form 
@@ -56,79 +55,72 @@
           <input class = 'button' type = "submit" value = "submit" />
         </p>
         </form>
-        <hr>
-        </div>
 
   <!-- Results
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-            
-        <div class="twelve columns" style="margin-top: 0%;">
-
-      <p>
+        
         <code>
-           {% for key, value in search.items() %}
-           {{value}} — {{number}} clinical trials
-           {% endfor %}
-         </code>
-       </p>
+         {% for key, value in search.items() %}
+         {{value}} — {{number}} clinical trials
+         {% endfor %}
+       </code>
+       
+       <hr>
+
+     </div>
+        <div class="twelve columns" style="margin-top: 0%">
+
           <div id="svgTimeline"></div>
+
+        <!-- {% block content %}
+        {{timeline_graph}}
+        {% endblock %} -->
+
+        <!-- {% for _, row in data.iterrows() %}
+          <p>{{ row['source'] }} | {{ row['brief_title'] }}</p>
+        {% endfor %} -->
+
+      <!--   {% for record in data.iterrows() %}
+        <p>{{record}}</p>
+        {% endfor %} -->
     </div>
 </div>
 </div>
 
 <!-- Scripts  -->
-<!-- d3 graphs -->
+<!-- js variables to pass data -->
   <script>
-    // Data variables
     var graphData = {{ timeline_graph | safe }};
+    var nct_id = graphData.nct_id
 
-    var data = Object.values(graphData.nct_id);
-    var keys = Object.values(graphData.year_submitted)
+    console.log(nct_id);
 
-    console.log(data, keys);
+    var dataset = [ 5, 10, 35, 20, 25, 4, 35];
 
-    //
-    // Chart: Warming Stripes
+    var w = 700;
+    var h = 100;
+    var barPadding = 1;
 
-    // variables
-    var w = 400;
-    var h = 20;
-    var barPadding = 2;
-    var color = '#008fd5';
-    var min = d3.min(data);
-    var max = d3.max(data);
-
-
-    // chart
-    var yScale = d3.scaleLinear().domain([0, max]).range([0, h]);
-
-    // color
-    var colorFill = d3.scaleLinear().domain([0,max]).range(["#ffffff", color]);
-    var colorOpacity = d3.scaleLinear().domain([0,max]).range([.3, 1]);
-
-    d3.select("div#svgTimeline")
+    d3.select("#svgTimeline")
         .append("svg")
         .attr('width', w)
         .attr('height', h)
-        .style('padding', '5px')
         .selectAll('rect')
-        .data(data)
+        .data(dataset)
         .enter()
         .append('rect')
-        .attr('width', w / data.length - barPadding)
-        .attr('height', h)
-        .attr('x', function(d, i){ return i * (w / data.length);})
-        // .attr('y', function (d) {return h - yScale(d);})
-        .attr('fill', colorFill)
-        .style('opacity', colorOpacity)
-        
+        .attr('fill', 'teal')
+        .attr('x', function(d, i){ return i * (w / dataset.length)})
+        .attr('y', function (d) {return h - d})
+        .attr('width', w / dataset.length - barPadding)
+        .attr('height', function(d) {return d});
 
-    // end of chart
+    // d3.selectAll("#svgTimeline")
+    //   .append('circle')
+    //   .attr('r', '300px')
+    //   .style('border', '10px solid black');
 
   </script>
-
-<!-- d3 timeline -->
-  <script src="{{ url_for('static', filename = 'charts/timeline.js') }}"></script>
 
 <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
