@@ -42,38 +42,36 @@ def search():
       search = request.form
 
       #Connect to db
-      conn = sqlite3.connect(DATABASE)
+      conn = sqlite3.connect(DATABASE)      
 
       # Define query
       result_value = request.form['Search']
       first_sql = "SELECT * from all_trials WHERE all_text LIKE "
       term = "'%" + str(result_value) + "%'"
       full_query_string = first_sql + term
-
       # Query db and store results
       df = pd.read_sql_query(full_query_string, conn)
       
-      # Data
+      # Number of results
       number_results = len(df)
       
-      # Group by year
+      # Group by year: timeline graph
       df_year = df.groupby(['year_submitted'], as_index=False).nct_id.count()
 
-      # Group by source
+      # Group by source: summary
       df_source = df.groupby(['source'], as_index=False).nct_id.count()
       source_number = df_source['source'].nunique()
 
-      # Trials by phase
-      df_phase = df.groupby(['phase'], as_index=False).nct_id.count()
+      # Trials by phase, year
+      df_phase = df.groupby(['phase', 'year_submitted'], as_index=False).nct_id.count()
 
-      # all_data = {'data': 'df', 'search': 'search', 'number': 'number_results', 'timeline_graph': 'df_year'}
+      all_data = {'data': 'df', 'search': 'search', 'number': 'number_results', 'timeline_graph': 'df_year'}
 
       return render_template("result.html", 
-         data = df, 
+         data = all_data,
          search = search, 
          number = number_results,
          timeline_graph = df_year.to_json(),
-         sources = df_source.to_json(),
          source_number = source_number,
          phase = df_phase.to_json())
 
