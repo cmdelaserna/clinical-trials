@@ -37,12 +37,14 @@ def index():
 @app.route('/result', methods = ['GET', 'POST'])
 def search():
    if request.method == 'POST':
+
+      # Store search term
       search = request.form
 
       #Connect to db
       conn = sqlite3.connect(DATABASE)
 
-      # Search for string match
+      # Define query
       result_value = request.form['Search']
       first_sql = "SELECT * from all_trials WHERE all_text LIKE "
       term = "'%" + str(result_value) + "%'"
@@ -50,10 +52,19 @@ def search():
 
       # Query db and store results
       df = pd.read_sql_query(full_query_string, conn)
+      
       # Data
       number_results = len(df)
+      
       # Group by year
       df_year = df.groupby(['year_submitted'], as_index=False).nct_id.count()
+
+      # Group by source
+      df_source = df.groupby(['source'], as_index=False).nct_id.count()
+      source_number = df_source['source'].nunique()
+
+      # Trials by phase
+      df_phase = df.groupby(['phase'], as_index=False).nct_id.count()
 
       # all_data = {'data': 'df', 'search': 'search', 'number': 'number_results', 'timeline_graph': 'df_year'}
 
@@ -61,7 +72,10 @@ def search():
          data = df, 
          search = search, 
          number = number_results,
-         timeline_graph = df_year.to_json())
+         timeline_graph = df_year.to_json(),
+         sources = df_source.to_json(),
+         source_number = source_number,
+         phase = df_phase.to_json())
 
    else:
       return render_template('index.html', data = None)

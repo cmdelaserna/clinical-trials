@@ -25,7 +25,7 @@
   
   <!-- FONT
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <!-- <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css"> -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
 
 
   <!-- CSS
@@ -46,7 +46,7 @@
   <div class="container">
     <div class="row">
       <div class="twelve columns" style="margin-top: 3%">
-        <h5>Trials Explorer</h5>
+        <h5><strong>Science Reports Lab</strong></h5>
 
   <!-- Form 
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -62,36 +62,49 @@
   <!-- Results
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
             
-        <div class="twelve columns" style="margin-top: 0%;">
-
+    <!-- Summary -->
+        <div class="twelve columns">
+      {% for key, value in search.items() %}
+      <p><strong>Summary: "{{value}}"</strong></p>
       <p>
-        <code>
-           {% for key, value in search.items() %}
-           {{value}} — {{number}} clinical trials
+        <code class='u-pull-left'>
+           Clinical Trials: {{number}} entries and {{source_number}} sources found
            {% endfor %}
-         </code>
-       </p>
-          <div id="svgTimeline"></div>
+           </code></p>
+         <p><div id="svgTimeline" class='u-pull-right'></div></p>
+       </div>
+
+
+  <!-- Graph: Phases
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+       <div class="twelve columns"  style='margin-top: 5%'>
+        <hr>
+          <p><strong>Clinical Trials by phase</strong></p>
+          <div id="phase"></div>
     </div>
+
+<!-- row -->    
 </div>
+<!-- container -->
 </div>
 
-<!-- Scripts  -->
-<!-- d3 graphs -->
+<!-- d3 scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+
+<!-- Stripes. Summary
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <script>
     // Data variables
     var graphData = {{ timeline_graph | safe }};
-
     var data = Object.values(graphData.nct_id);
     var keys = Object.values(graphData.year_submitted)
+    // console.log(data, keys);
 
-    console.log(data, keys);
-
-    //
     // Chart: Warming Stripes
 
     // variables
-    var w = 400;
+    var w = 300;
     var h = 20;
     var barPadding = 2;
     var color = '#008fd5';
@@ -99,11 +112,11 @@
     var max = d3.max(data);
 
 
-    // chart
+    // Scale
     var yScale = d3.scaleLinear().domain([0, max]).range([0, h]);
 
-    // color
-    var colorFill = d3.scaleLinear().domain([0,max]).range(["#ffffff", color]);
+    // Color & Opacity
+    var colorFill = d3.scaleLinear().domain([0,max]).range(["#fefefe", color]);
     var colorOpacity = d3.scaleLinear().domain([0,max]).range([.3, 1]);
 
     d3.select("div#svgTimeline")
@@ -118,12 +131,60 @@
         .attr('width', w / data.length - barPadding)
         .attr('height', h)
         .attr('x', function(d, i){ return i * (w / data.length);})
-        // .attr('y', function (d) {return h - yScale(d);})
         .attr('fill', colorFill)
-        .style('opacity', colorOpacity)
+        .style('opacity', colorOpacity)  
+
+    // end of chart
+  </script>
+
+
+<!-- Clinical Trial phases
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script>
+
+    // Data variables
+    var phase = {{ phase | safe }};
+    console.log(phase);
+
+    var data = Object.values(phase.nct_id);
+    var keys = Object.values(phase.phase);
+
+    console.log(data, keys);
+
+    // variables
+    var w = 850;
+    var h = 200;
+    var barPadding = 2;
+    var color = '#008fd5';
+    var min = d3.min(data);
+    var max = d3.max(data);
+
+
+    // chart
+    var yScale = d3.scaleLinear().domain([0, max]).range([0, h]);
+
+    // color
+    var colorOpacity = d3.scaleLinear().domain([0,max]).range(["#ffffff", color]);
+
+    d3.select("div#phase")
+        .append("svg")
+        .attr('width', w)
+        .attr('height', h)
+        .style('padding', '5px')
+        .selectAll('rect')
+        .data(data)
+        .enter()
+        .append('rect')
+        .attr('width', w / data.length - barPadding)
+        .attr('height', function(d) {return yScale(d);})
+        .attr('x', function(d, i){ return i * (w / data.length);})
+        .attr('y', function (d) {return h - yScale(d);})
+        .attr('fill', color)
+        .style('opacity', 0.8)
         
 
     // end of chart
+
 
   </script>
 
