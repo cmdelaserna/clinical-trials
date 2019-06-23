@@ -10,6 +10,7 @@ import sqlite3
 import pandas as pd
 import json
 import time
+import numpy as np
 
 '''
 CONFIGURATION
@@ -40,6 +41,44 @@ def build_query(search_field):
    return full_query_string
 
 
+# ADD MISSING YEARS IN TIME-BASED CHARTS
+def add_missing_years(data, column_name1, column_name2):
+
+   global df_final
+
+   all_years = np.arange(1999, 2020)
+   zeros = ([0] * len(all_years))
+   missing_years = [item for item in all_years if item not in data]
+   columns = [column_name1, column_name2] #ie, ['year_submitted', 'nct_id']
+
+   zippedList =  list(zip(missing_years, zeros))
+   df_all_years = pd.DataFrame(zippedList, columns = columns) 
+
+   df_final = pd.concat([data, df_all_years], ignore_index=True)
+   df_final = df_final.sort_values(by=column_name1).reset_index(drop=True)
+
+   return df_final
+
+
+# ADD MISSING YEARS IN TRIALS BY PHASE
+def phase_missing_years(data, column_name1, column_name2, column_name3):
+
+   global df_phase_final
+
+   all_years = np.arange(1999, 2020)
+   zeros = ([0] * len(all_years))
+   missing_years = [item for item in all_years if item not in data]
+   columns = [column_name1, column_name2] #ie, ['year_submitted', 'nct_id']
+
+   zippedList =  list(zip(missing_years, zeros))
+   df_all_years = pd.DataFrame(zippedList, columns = columns) 
+
+   df_phase_final = pd.concat([data, df_all_years], ignore_index=True)
+   df_phase_final = df_phase_final.sort_values(by=column_name1).reset_index(drop=True)
+
+   return df_phase_final
+
+
 '''
 VIEWS
 '''
@@ -65,6 +104,7 @@ def search():
 
       # Group by year
       df_year = df.groupby(['year_submitted'], as_index=False).nct_id.count()
+      add_missing_years(df_year, 'year_submitted', 'nct_id')
 
       # Get number of sources in query
       df_source = df.groupby(['source'], as_index=False).nct_id.count()
@@ -77,8 +117,8 @@ def search():
       return render_template("result.html", 
          search = search, 
          number = number_results,
-         df = df.to_json(),
-         timeline_graph = df_year.to_json(),
+         all_data = df.to_json(),
+         timeline_graph = df_final.to_json(),
          source_number = source_number,
          phase = df_phase.to_json())
 
