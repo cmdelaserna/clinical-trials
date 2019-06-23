@@ -24,8 +24,40 @@ DATABASE = '../data/working_data/database.db'
 FUNCTIONS
 '''
 
+# BUILD QUERY
+def build_query(search_field):
+   # Global variables
+   global search, full_query_string
+   search = request.form   
 
-# Views
+   # Build query
+   result_value = request.form[search_field]
+   first_sql = "SELECT * from all_trials WHERE all_text LIKE "
+   term = "'%" + str(result_value) + "%'"
+
+   full_query_string = first_sql + term
+
+   return full_query_string
+
+
+# BUILD TIMELINE
+def build_timeline(data, column):
+   
+   # Global variable
+   global df_year
+
+   df_year = data.groupby([column], as_index=False).nct_id.count()
+
+   # Add missing years [1999 - 2019]
+   all_years = list(range(1999, 2020))
+   filtered_years = [item for item in all_years if item not in df_year]
+
+   return df_year
+
+
+'''
+VIEWS
+'''
 
 # Index
 @app.route('/', methods = ['GET', 'POST'])
@@ -38,42 +70,33 @@ def index():
 def search():
    if request.method == 'POST':
 
-      # Store search term
-      search = request.form
-
       #Connect to db
       conn = sqlite3.connect(DATABASE)      
 
-      # Define query
-      result_value = request.form['Search']
-      first_sql = "SELECT * from all_trials WHERE all_text LIKE "
-      term = "'%" + str(result_value) + "%'"
-      full_query_string = first_sql + term
-      # Query db and store results
+      # # Query, store data
+      build_query('Search')
       df = pd.read_sql_query(full_query_string, conn)
-      
-      # Number of results
       number_results = len(df)
-      
-      # Group by year: timeline graph
-      df_year = df.groupby(['year_submitted'], as_index=False).nct_id.count()
 
-      # Group by source: summary
+      # Group by year
+      build_timeline(df, 'year_submitted')
+
+      # Get number of sources in query
       df_source = df.groupby(['source'], as_index=False).nct_id.count()
       source_number = df_source['source'].nunique()
 
       # Trials by phase, year
       df_phase = df.groupby(['phase', 'year_submitted'], as_index=False).nct_id.count()
 
-      all_data = {'data': 'df', 'search': 'search', 'number': 'number_results', 'timeline_graph': 'df_year'}
 
       return render_template("result.html", 
-         data = all_data,
          search = search, 
          number = number_results,
+         df = df.to_json(),
          timeline_graph = df_year.to_json(),
          source_number = source_number,
          phase = df_phase.to_json())
+
 
    else:
       return render_template('index.html', data = None)
