@@ -40,21 +40,6 @@ def build_query(search_field):
    return full_query_string
 
 
-# BUILD TIMELINE
-def build_timeline(data, column):
-   
-   # Global variable
-   global df_year
-
-   df_year = data.groupby([column], as_index=False).nct_id.count()
-
-   # Add missing years [1999 - 2019]
-   all_years = list(range(1999, 2020))
-   filtered_years = [item for item in all_years if item not in df_year]
-
-   return df_year
-
-
 '''
 VIEWS
 '''
@@ -79,7 +64,7 @@ def search():
       number_results = len(df)
 
       # Group by year
-      build_timeline(df, 'year_submitted')
+      df_year = df.groupby(['year_submitted'], as_index=False).nct_id.count()
 
       # Get number of sources in query
       df_source = df.groupby(['source'], as_index=False).nct_id.count()

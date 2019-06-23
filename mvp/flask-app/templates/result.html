@@ -103,12 +103,13 @@
     var data = Object.values(timelineData.nct_id);
     var years = Object.values(timelineData.year_submitted);
 
+   // Warming Stripes
+
     // variables
     var w = 300;
     var h = 20;
     var barPadding = 2;
     var color = '#008fd5';
-    var min = d3.min(data);
     var max = d3.max(data);
 
     // YScale
@@ -135,12 +136,8 @@
 
     // end of chart
 
-  </script>
 
-
-<!-- Clinical Trial phases
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <script>
+    // Bar chart
 
     // Data variables
     var phase = {{ phase | safe }};
@@ -183,8 +180,7 @@
 
   </script>
 
-<!-- d3 timeline -->
-<!--   <script src="{{ url_for('static', filename = 'charts/timeline.js') }}"></script> -->
+  <!-- <script src="{{ url_for('static', filename = 'charts/graphs.js') }}"></script> -->
 
 <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
