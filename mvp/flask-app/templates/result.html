@@ -1,6 +1,7 @@
 <!-- Doc: http://getskeleton.com/ -->
 <!-- d3 data: https://www.d3-graph-gallery.com/graph/basic_datamanipulation.html  -->
  <!-- D3 FILES & FLASK DATA: http://www.mydatastack.com/flaskd3part1 -->
+ <!-- Color pallete: https://gka.github.io/palettes/ -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -71,7 +72,7 @@
          Clinical Trials: {{number}} entries and {{source_number}} sources found
          {% endfor %}
      </code></p>
-         <p><div id="svgTimeline"></div></p>
+          <div id="svgTimeline"></div>
        </div>
 
 
@@ -101,24 +102,26 @@
     // Data
     var all_data = {{ all_data | safe }};
     var timelineData = {{ timeline_graph | safe }};
-    var data = Object.values(timelineData.nct_id);
+    var dataStripe = Object.values(timelineData.nct_id);
     var years = Object.values(timelineData.year_submitted);
 
+    //
    // Warming Stripes
+   //
 
     // variables
     var w = 500;
     var h = 10;
     var barPadding = 1;
     var color = '#008fd5';
-    var max = d3.max(data);
+    var maxStripe = d3.max(dataStripe);
 
     // YScale
-    var yScale = d3.scaleLinear().domain([0, max]).range([0, h]);
+    var yScale = d3.scaleLinear().domain([0, maxStripe]).range([0, h]);
 
     // Color & Opacity scales
-    var colorFill = d3.scaleLinear().domain([0,max]).range(["#dfdfdf", color]);
-    var colorOpacity = d3.scaleLinear().domain([0,max]).range([.7, 1]);
+    var colorFill = d3.scaleLinear().domain([0,maxStripe]).range(["#dfdfdf", color]);
+    var colorOpacity = d3.scaleLinear().domain([0,maxStripe]).range([.7, 1]);
 
     // d3 chart
     d3.select("div#svgTimeline")
@@ -126,37 +129,35 @@
         .attr('width', w)
         .attr('height', h)
         .selectAll('rect')
-        .data(data)
+        .data(dataStripe)
         .enter()
-        .append('rect')
-        .attr('width', w / data.length - barPadding)
+        .append('rect').transition().delay(5)
+        .attr('width', w / dataStripe.length - barPadding)
         .attr('height', h)
-        .attr('x', function(d, i){ return i * (w / data.length);})
+        .attr('x', function(d, i){ return i * (w / dataStripe.length);})
         .attr('fill', colorFill)
         .style('opacity', colorOpacity)  
 
     // end of chart
 
-
+    //
     // Bar chart
+    //
 
     // Data variables
     var phase = {{ phase | safe }};
 
-    var data = Object.values(phase.nct_id);
-    var keys = Object.values(phase.phase);  
-    console.log(data, keys);
+    var dataPhase = Object.values(phase.nct_id);
+    var keysPhase = Object.values(phase.phase);  
+    console.log(phase);
 
     // variables
-    var w = 790;
+    var w = 780;
     var h = 200;
-    var barPadding = 1;
-    var color = '#008fd5';
-    var min = d3.min(data);
-    var max = d3.max(data);
+    var maxPhase = d3.max(dataPhase);
 
     // chart
-    var yScale = d3.scaleLinear().domain([0, max]).range([0, h]);
+    var yScale = d3.scaleLinear().domain([0, maxPhase]).range([0, h]);
 
 
     d3.select("div#phase")
@@ -165,15 +166,15 @@
         .attr('height', h)
         .style('padding', '5px')
         .selectAll('rect')
-        .data(data)
+        .data(dataPhase)
         .enter()
-        .append('rect')
-        .attr('width', w / data.length - barPadding)
+        .append('rect').transition().delay(10)
+        .attr('width', w / dataPhase.length - barPadding)
         .attr('height', function(d) {return yScale(d);})
-        .attr('x', function(d, i){ return i * (w / data.length);})
+        .attr('x', function(d, i){ return i * (w / dataPhase.length);})
         .attr('y', function (d) {return h - yScale(d);})
         .attr('fill', color)
-        .style('opacity', 0.8)
+        .style('opacity', colorOpacity)
         
 
     // end of chart
