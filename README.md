@@ -40,18 +40,16 @@ to-do:
 - Remove /n
 - Create new column with all_text. Lowercase. Remove extra whitespace
 - Remove unnecesary columns. 
-- Export all_trials and word_counts datasets to sqlite database
+- Export: all_trials, word_counts, topics? datasets to sqlite database
+
+to-do: Extract entities from all data. Extract topics from each file? 
 
 
-#### Script 4: Search and visualize results
-- Fetch data from sqlite db
-- Search: match in all_text
-- Curate context for search
-	- Countvectorizer
-	- tf-idf
-	- Similarity between documents
-- Build API structure to separate backend (data results) from front-end
-- Test workflow with simple D3 chart 
-- Define structure for Search Report
+#### Flask APP
+- Build query, search for matching string. 
+- Function to add missing years in time-based charts. 
+- Calculate Trial Index based on search results.
+- Extract topics from search results (in preprocess?)
+- Pass data to front-end (decide on datasets)
 
 
