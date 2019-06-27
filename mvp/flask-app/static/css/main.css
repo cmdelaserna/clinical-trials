@@ -7,3 +7,15 @@ input[type="text"] {
 .svg {
 	margin: 0;
 }
+
+.tooltip {
+  position: absolute;
+  text-align: center;
+  padding: 5px;
+  margin-top: -20px;
+  font: 10px sans-serif;
+  background: #fefefe;
+  border: 1px solid #eee;
+  pointer-events: none;
+  opacity: 0.2;
+}
