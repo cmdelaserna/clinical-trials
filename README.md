@@ -7,6 +7,8 @@
 - Unified Medical Language (https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html)
 - Wikidocs
 
+Notebook limit: jupyter notebook --NotebookApp.iopub_data_rate_limit=1000000
+
 
 ### Workflow: 
 
