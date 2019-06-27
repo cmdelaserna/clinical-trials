@@ -114,11 +114,17 @@
     var gray = "#dfdfdf";
 
     // YScale
+    var xScaleTimeline = d3.scaleLinear().range([0, wTimeline]);
     var yScaleTimeline = d3.scaleLinear().domain([0, maxStripe]).range([0, hTimeline]);
 
     // Color scales
     // var colorFill = d3.scaleLinear().domain([0,maxStripe]).range([gray, color]);
     var colorOpacity = d3.scaleLinear().domain([0,maxStripe]).range([.3, 1]);
+
+    // Div for the tooltip
+    var div = d3.select("body").append("div") 
+      .attr("class", "tooltip")       
+      .style("opacity", 0);
 
     // d3 chart
     var svgTimeline = d3.select("div#svgTimeline")
@@ -135,16 +141,20 @@
       .attr('x', function(d, i){ return i * (wTimeline / dataStripe.length);})
       .attr('y', function (d) {return hTimeline - yScaleTimeline(d);})
       .attr('fill', color)
-      .attr('opacity', colorOpacity);
-
-    // svgTimeline.selectAll("text")
-    //   .data(years)
-    //   .enter()
-    //   .append("text")
-    //   .text(function (d) { return d ;})
-    //   .attr("x", function(d, i) { return i * (wTimeline / years.length);})
-    //   .attr("y", function(d, i) { return i + (hTimeline - 10);})
-    //   .attr('font-size', '10px');
+      .attr('opacity', colorOpacity)
+      .on("mouseover", function(d) {    
+            div.transition()    
+                .duration(200)    
+                .style("opacity", .9);    
+            div .html(d + "<br/>"  + d)  
+                .style("left", (d3.event.pageX) - 10 + "px")   
+                .style("top", (d3.event.pageY - 40) + "px")  
+            })          
+        .on("mouseout", function(d) {   
+            div.transition()    
+                .duration(500)    
+                .style("opacity", 0); 
+        });
 
     // end of chart
 
@@ -177,7 +187,20 @@
       .attr('height', function(d) {return yScaleBar(d);})
       .attr('x', function(d, i){ return i * (wBar / dataPhase.length);})
       .attr('y', function (d) {return hBar - yScaleBar(d);})
-      .attr('fill', color);
+      .attr('fill', color)
+      .on("mouseover", function(d) {    
+            div.transition()    
+                .duration(200)    
+                .style("opacity", .9);    
+            div .html(d + "<br/>"  + d)  
+                .style("left", (d3.event.pageX) + "px")   
+                .style("top", (d3.event.pageY - 40) + "px")  
+            })          
+      .on("mouseout", function(d) {   
+          div.transition()    
+              .duration(500)    
+              .style("opacity", 0); 
+        });
 
     // end of chart
 
