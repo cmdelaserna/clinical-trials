@@ -141,6 +141,9 @@
                         .enter()
                         .append('rect');
 
+// Pending adding second array for tooltips info
+// http://www.jeromecukier.net/2012/05/28/manipulating-data-like-a-boss-with-d3/
+
     var attrTimeline = rectTimeline
                         .attr('width', wTimeline / timelineData.length - barPadding)
                         .attr('height', function(d) {return yScaleTimeline(d);})
