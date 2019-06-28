@@ -97,7 +97,7 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <script>
 
-    // CHART: TIMELINE
+// CHART: TIMELINE
 
     // Data
     var all_data = {{ all_data | safe }};
@@ -131,7 +131,7 @@
       .append("svg")
       .attr('width', wTimeline)
       .attr('height', hTimeline);
-
+    
     svgTimeline.selectAll('rect')
       .data(dataStripe)
       .enter()
@@ -141,7 +141,6 @@
       .attr('x', function(d, i){ return i * (wTimeline / dataStripe.length);})
       .attr('y', function (d) {return hTimeline - yScaleTimeline(d);})
       .attr('fill', color)
-      .attr('opacity', colorOpacity)
       .on("mouseover", function(d) {    
             div.transition()    
                 .duration(200)    
@@ -155,7 +154,7 @@
                 .duration(500)    
                 .style("opacity", 0); 
         });
-
+    
     // end of chart
 
     
