@@ -111,7 +111,7 @@ def search():
       source_number = df_source['source'].nunique()
 
       # Trials by phase, year
-      df_phase_final = df.groupby(['phase', 'year_submitted'], as_index=False).nct_id.count().sort_values(['year_submitted', 'phase']).reset_index(drop=True)
+      df_phase_final = df.groupby(['phase'], as_index=False).nct_id.count()
       # phase_missing_years(df_phase, 'year_submitted', 'phase', 'nct_id')
 
       # Data to JSON

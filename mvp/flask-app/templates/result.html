@@ -64,15 +64,30 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
             
     <!-- Summary -->
-        <div class="twelve columns">
+
+    <!-- 1st column -->
+    <div class="row">
+        <div class="six columns">
       {% for key, value in search.items() %}
       <p><strong>Summary: "{{value}}"</strong></p>
       <p>
       <code>
-         Clinical Trials: {{number}} entries and {{source_number}} sources found
+         Clinical Trials: {{number}} entries, {{source_number}} sources found
          {% endfor %}
      </code></p>
           <div id="svgTimeline"></div>
+       </div>
+
+    <!-- 2nd column -->
+        <div class="six columns">
+      {% for key, value in search.items() %}
+      <p><strong>Summary: "{{value}}"</strong></p>
+      <p>
+      <code>
+         Clinical Trials: {{number}} entries, {{source_number}} sources
+         {% endfor %}
+     </code></p>
+          <div id="phase"></div>
        </div>
 
 
@@ -81,10 +96,11 @@
        <div class="twelve columns"  style='margin-top: 5%'>
         <hr>
           <p><strong>Clinical Trials by phase</strong></p>
-          <div id="phase"></div>
+          <!-- <div id="phase"></div> -->
     </div>
 
 <!-- row -->    
+  </div>
 </div>
 <!-- container -->
 </div>
@@ -100,8 +116,8 @@
 // CHART: TIMELINE
 
     // https://gka.github.io/palettes/#/9|s|00429d,96ffea,ffffe0|ffffe0,ff005e,93003a|1|1
-    var colorPalette = ['#00a4f7', '#20458b']; // blue
-    // var colorPalette = ['#f7d014', '#ff9b00']; // orange
+    // var colorPalette = ['#00a4f7', '#20458b']; // blue
+    var colorPalette = ['#f7d014', '#ff9b00']; // orange
     var color = colorPalette[1];
 
     // Main data variables
@@ -111,10 +127,12 @@
     var timelineData = Object.values(timelineJSON.nct_id);
     var timelineMax = d3.max(timelineData);
 
+    console.log(timelineDataYear, timelineData);
+
     var years = [1999, 2019];
 
     // Chart variables
-    var wTimeline = 400;
+    var wTimeline = 350;
     var hTimeline = 40;
     var barPadding = 1;
 
@@ -173,21 +191,17 @@
     var phase = {{ phase | safe }};
     var dataPhase = Object.values(phase.nct_id);
     var keysPhase = Object.values(phase.phase); 
-    var yearsPhase = Object.values(phase.year_submitted);
+    console.log(dataPhase, keysPhase);
     var maxPhase = d3.max(dataPhase); 
 
-    // Chart variables
-    var wBar = 780;
-    var hBar = 200;
-
     // Scales
-    var yScaleBar = d3.scaleLinear().domain([0, maxPhase]).range([0, hBar]);
+    var yScaleBar = d3.scaleLinear().domain([0, maxPhase]).range([0, hTimeline]);
     var colorFillBar = d3.scaleLinear().domain([0, maxPhase]).range([colorPalette[0], colorPalette[1]]);
 
     var svgPhase = d3.select("div#phase")
         .append("svg")
-        .attr('width', wBar)
-        .attr('height', hBar);
+        .attr('width', wTimeline)
+        .attr('height', hTimeline);
 
     var rectPhases = svgPhase.selectAll('rect')
                       .data(dataPhase)
@@ -196,16 +210,16 @@
 
     // Phases: Early Phase 1, N/A, Phase 1, Phase 1/Phase 2, Phase 2, Phase 2/Phase 3, Phase 3
 
-    var attrPhases =  rectPhases.attr('width', wBar / dataPhase.length - barPadding)
+    var attrPhases =  rectPhases.attr('width', wTimeline / dataPhase.length - barPadding)
                                 .attr('height', function(d) {return yScaleBar(d);})
-                                .attr('x', function(d, i){ return i * (wBar / dataPhase.length);})
-                                .attr('y', function (d) {return hBar - yScaleBar(d);})
+                                .attr('x', function(d, i){ return i * (wTimeline / dataPhase.length);})
+                                .attr('y', function (d) {return hTimeline - yScaleBar(d);})
                                 .attr('fill', function(d) {return colorFillBar(d);})
                                 .on("mouseover", function(d) {    
                                       div.transition()    
                                           .duration(200)    
                                           .style("opacity", .9);    
-                                      div .html(d + "<br/>"  + keysPhase[d] + "<br/>" + yearsPhase[d])  
+                                      div .html(d + "<br/>"  + keysPhase[d])  
                                           .style("left", (d3.event.pageX) + "px")   
                                           .style("top", (d3.event.pageY - 40) + "px")  
                                       })          
