@@ -100,60 +100,65 @@
 // CHART: TIMELINE
 
     // Data
-    var all_data = {{ all_data | safe }};
-    var timelineData = {{ timeline_graph | safe }};
-    var dataStripe = Object.values(timelineData.nct_id);
-    var maxStripe = d3.max(dataStripe);
-    var years = [1999, 2019];
+    var timelineData = ({{ timeline | safe }});
+    console.log(timelineData);
+    console.log(timelineData[0].year_submitted, timelineData[0].nct_id);
+
+    // d3.json({{ timeline_graph | safe }}, function(error, data) {
+    //   console.log(data);});
+
+    // var dataStripe = Object.values(timelineData.nct_id);
+    // var maxStripe = d3.max(dataStripe);
+    // var years = [1999, 2019];
 
     // Chart variables
-    var wTimeline = 400;
-    var hTimeline = 40;
-    var barPadding = 1;
-    var color = '#ffa500';
-    var gray = "#dfdfdf";
+    // var wTimeline = 400;
+    // var hTimeline = 40;
+    // var barPadding = 1;
+    // var color = '#ffa500';
+    // var gray = "#dfdfdf";
 
     // YScale
-    var xScaleTimeline = d3.scaleLinear().range([0, wTimeline]);
-    var yScaleTimeline = d3.scaleLinear().domain([0, maxStripe]).range([0, hTimeline]);
+    // var xScaleTimeline = d3.scaleLinear().range([0, wTimeline]);
+    // var yScaleTimeline = d3.scaleLinear().domain([0, maxStripe]).range([0, hTimeline]);
 
     // Color scales
     // var colorFill = d3.scaleLinear().domain([0,maxStripe]).range([gray, color]);
-    var colorOpacity = d3.scaleLinear().domain([0,maxStripe]).range([.3, 1]);
+    // var colorOpacity = d3.scaleLinear().domain([0,maxStripe]).range([.3, 1]);
 
     // Div for the tooltip
-    var div = d3.select("body").append("div") 
-      .attr("class", "tooltip")       
-      .style("opacity", 0);
+    // var div = d3.select("body").append("div") 
+    //   .attr("class", "tooltip")       
+    //   .style("opacity", 0);
 
     // d3 chart
-    var svgTimeline = d3.select("div#svgTimeline")
-      .append("svg")
-      .attr('width', wTimeline)
-      .attr('height', hTimeline);
+    // var svgTimeline = d3.select("div#svgTimeline")
+    //   .append("svg")
+    //   .attr('width', wTimeline)
+    //   .attr('height', hTimeline);
     
-    svgTimeline.selectAll('rect')
-      .data(dataStripe)
-      .enter()
-      .append('rect')
-      .attr('width', wTimeline / dataStripe.length - barPadding)
-      .attr('height', function(d) {return yScaleTimeline(d);})
-      .attr('x', function(d, i){ return i * (wTimeline / dataStripe.length);})
-      .attr('y', function (d) {return hTimeline - yScaleTimeline(d);})
-      .attr('fill', color)
-      .on("mouseover", function(d) {    
-            div.transition()    
-                .duration(200)    
-                .style("opacity", .9);    
-            div .html(d + "<br/>"  + d)  
-                .style("left", (d3.event.pageX) - 10 + "px")   
-                .style("top", (d3.event.pageY - 40) + "px")  
-            })          
-        .on("mouseout", function(d) {   
-            div.transition()    
-                .duration(500)    
-                .style("opacity", 0); 
-        });
+    // svgTimeline.selectAll('rect')
+    //   .data(dataStripe)
+    //   .enter()
+    //   .append('rect')
+    //   .attr('width', wTimeline / dataStripe.length - barPadding)
+    //   .attr('height', function(d) {return yScaleTimeline(d);})
+    //   .attr('x', function(d, i){ return i * (wTimeline / dataStripe.length);})
+    //   .attr('y', function (d) {return hTimeline - yScaleTimeline(d);})
+    //   .attr('fill', color)
+    //   .on("mouseover", function(d) {    
+    //         div.transition()    
+    //             .duration(200)    
+    //             .style("opacity", .9);    
+    //         div .html(d + "<br/>"  + d)  
+    //             .style("left", (d3.event.pageX) - 10 + "px")   
+    //             .style("top", (d3.event.pageY - 40) + "px")  
+    //         })          
+    //     .on("mouseout", function(d) {   
+    //         div.transition()    
+    //             .duration(500)    
+    //             .style("opacity", 0); 
+    //     });
     
     // end of chart
 
@@ -161,45 +166,45 @@
     // BAR CHART (PHASES)
 
     // Data variables
-    var phase = {{ phase | safe }};
-    var dataPhase = Object.values(phase.nct_id);
-    var keysPhase = Object.values(phase.phase);  
+    // var phase = {{ phase | safe }};
+    // var dataPhase = Object.values(phase.nct_id);
+    // var keysPhase = Object.values(phase.phase);  
 
     // variables
-    var wBar = 780;
-    var hBar = 200;
-    var maxPhase = d3.max(dataPhase);
+    // var wBar = 780;
+    // var hBar = 200;
+    // var maxPhase = d3.max(dataPhase);
 
     // chart
-    var yScaleBar = d3.scaleLinear().domain([0, maxPhase]).range([0, hBar]);
+    // var yScaleBar = d3.scaleLinear().domain([0, maxPhase]).range([0, hBar]);
 
-    var svgPhase = d3.select("div#phase")
-        .append("svg")
-        .attr('width', wBar)
-        .attr('height', hBar);
+    // var svgPhase = d3.select("div#phase")
+    //     .append("svg")
+    //     .attr('width', wBar)
+    //     .attr('height', hBar);
 
-    svgPhase.selectAll('rect')
-      .data(dataPhase)
-      .enter()
-      .append('rect')
-      .attr('width', wBar / dataPhase.length - barPadding)
-      .attr('height', function(d) {return yScaleBar(d);})
-      .attr('x', function(d, i){ return i * (wBar / dataPhase.length);})
-      .attr('y', function (d) {return hBar - yScaleBar(d);})
-      .attr('fill', color)
-      .on("mouseover", function(d) {    
-            div.transition()    
-                .duration(200)    
-                .style("opacity", .9);    
-            div .html(d + "<br/>"  + d)  
-                .style("left", (d3.event.pageX) + "px")   
-                .style("top", (d3.event.pageY - 40) + "px")  
-            })          
-      .on("mouseout", function(d) {   
-          div.transition()    
-              .duration(500)    
-              .style("opacity", 0); 
-        });
+    // svgPhase.selectAll('rect')
+    //   .data(dataPhase)
+    //   .enter()
+    //   .append('rect')
+    //   .attr('width', wBar / dataPhase.length - barPadding)
+    //   .attr('height', function(d) {return yScaleBar(d);})
+    //   .attr('x', function(d, i){ return i * (wBar / dataPhase.length);})
+    //   .attr('y', function (d) {return hBar - yScaleBar(d);})
+    //   .attr('fill', color)
+    //   .on("mouseover", function(d) {    
+    //         div.transition()    
+    //             .duration(200)    
+    //             .style("opacity", .9);    
+    //         div .html(d + "<br/>"  + d)  
+    //             .style("left", (d3.event.pageX) + "px")   
+    //             .style("top", (d3.event.pageY - 40) + "px")  
+    //         })          
+    //   .on("mouseout", function(d) {   
+    //       div.transition()    
+    //           .duration(500)    
+    //           .style("opacity", 0); 
+    //     });
 
     // end of chart
 

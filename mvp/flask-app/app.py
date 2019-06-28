@@ -4,12 +4,11 @@
 #Configuration
 #
 
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request
 from flask_wtf import FlaskForm
 import sqlite3
 import pandas as pd
 import json
-import time
 import numpy as np
 
 '''
@@ -114,15 +113,17 @@ def search():
       df_phase = df.groupby(['phase', 'year_submitted'], as_index=False).nct_id.count()
       phase_missing_years(df_phase, 'year_submitted', 'phase', 'nct_id')
 
+      # Data to JSON
+      df_timeline = json.loads(df_year.to_json(orient='records'))
+      df_phase_json = json.loads(df.to_json(orient='records'))
+
 
       return render_template("result.html", 
          search = search, 
          number = number_results,
-         all_data = df.to_json(),
-         timeline_graph = df_final.to_json(),
          source_number = source_number,
-         phase = df_phase_final.to_json())
-
+         timeline = df_timeline,
+         phase = df_phase_json)
 
    else:
       return render_template('index.html', data = None)
