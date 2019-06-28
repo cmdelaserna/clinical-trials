@@ -3,6 +3,10 @@
 .ipynb_checkpoints/
 data/
 
+# Flask #
+######################
+/*_session/
+
 # OS generated files #
 ######################
 .DS_Store
