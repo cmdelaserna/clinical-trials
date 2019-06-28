@@ -43,7 +43,7 @@ def build_query(search_field):
 # ADD MISSING YEARS IN TIME-BASED CHARTS
 def add_missing_years(data, column_year, column_name_count):
 
-   global df_final
+   global df_year_final
 
    all_years = np.arange(1999, 2020)
    zeros = ([0] * len(all_years))
@@ -53,10 +53,10 @@ def add_missing_years(data, column_year, column_name_count):
    zippedList =  list(zip(missing_years, zeros))
    df_all_years = pd.DataFrame(zippedList, columns = columns) 
 
-   df_final = pd.concat([data, df_all_years], ignore_index=True)
-   df_final = df_final.sort_values(by=column_year).reset_index(drop=True)
+   df_year_final = pd.concat([data, df_all_years], ignore_index=True)
+   df_year_final = df_year_final.sort_values(by=column_year).reset_index(drop=True)
 
-   return df_final
+   return df_year_final
 
 
 # ADD MISSING YEARS IN TRIALS BY PHASE
@@ -114,16 +114,16 @@ def search():
       phase_missing_years(df_phase, 'year_submitted', 'phase', 'nct_id')
 
       # Data to JSON
-      df_timeline = json.loads(df_year.to_json(orient='records'))
-      df_phase_json = json.loads(df.to_json(orient='records'))
+      # df_timeline = json.loads(df_year.to_json(orient='records'))
+      # df_phase_json = json.loads(df.to_json(orient='records'))
 
 
       return render_template("result.html", 
          search = search, 
          number = number_results,
          source_number = source_number,
-         timeline = df_timeline,
-         phase = df_phase_json)
+         timeline = df_year_final.to_json(),
+         phase = df_phase_final.to_json())
 
    else:
       return render_template('index.html', data = None)
