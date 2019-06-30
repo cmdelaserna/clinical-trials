@@ -1,5 +1,11 @@
 # clinical-trials
 
+### Configuration: 
+
+- Install npm files in static folder. Load them with: <script src="{{ url_for('static', filename='node_modules/toastr/toastr.js')}}"></script>
+
+- D3 library: https://github.com/wbkd/awesome-d3#charts
+
 
 ### Data sources:
 - clinicaltrials.gov bulk download

@@ -24,7 +24,7 @@ DATABASE = '../data/working_data/database.db'
 FUNCTIONS
 '''
 
-# BUILD QUERY
+# Query
 def build_query(search_field):
    # Global variables
    global search, full_query_string
@@ -38,63 +38,6 @@ def build_query(search_field):
    full_query_string = first_sql + term
 
    return full_query_string
-
-
-# ADD MISSING YEARS IN TIME-BASED CHARTS
-# def add_missing_years(data, column_year, column_name_count):
-
-#    global df_year_final
-
-#    all_years = np.arange(1999, 2020)
-#    missing_years = [item for item in all_years if item not in data]
-#    zeros = ([0] * len(missing_years))
-
-#    columns = [column_year, column_name_count] #ie, ['year_submitted', 'nct_id']
-
-#    zippedList =  list(zip(missing_years, zeros))
-#    df_all_years = pd.DataFrame(zippedList, columns = columns) 
-
-#    df_year_final = pd.concat([data, df_all_years], ignore_index=True)
-#    df_year_final = df_year_final.sort_values(by=column_year).reset_index(drop=True)
-
-#    return df_year_final
-
-def add_missing_years(data, column_year, column_name_count):
-
-   global df_year_final
-
-   all_years = np.arange(1999, 2020)
-   missing_years = [item for item in all_years if item not in data]
-   zeros = ([0] * len(missing_years))
-
-   columns = [column_year, column_name_count] #ie, ['year_submitted', 'nct_id']
-
-   zippedList =  list(zip(missing_years, zeros))
-   df_all_years = pd.DataFrame(zippedList, columns = columns) 
-
-   df_year_final = pd.concat([data, df_all_years], ignore_index=True)
-   df_year_final = df_year_final.sort_values(by=column_year).reset_index(drop=True)
-
-   return df_year_final
-
-
-# ADD MISSING YEARS IN TRIALS BY PHASE
-def phase_missing_years(data, column_year, column_phase, column_name_count):
-
-   global df_phase_final
-
-   all_years = np.arange(1999, 2020)
-   zeros = ([0] * len(all_years))
-   missing_years = [item for item in all_years if item not in data]
-   columns = [column_year, column_phase, column_name_count] #ie, ['year_submitted', 'nct_id']
-
-   zippedList =  list(zip(missing_years, zeros, zeros))
-   df_all_years = pd.DataFrame(zippedList, columns = columns) 
-
-   df_phase_final = pd.concat([data, df_all_years], ignore_index=True)
-   df_phase_final = df_phase_final.sort_values(by=column_year).reset_index(drop=True)
-
-   return df_phase_final
 
 
 '''
@@ -120,17 +63,38 @@ def search():
       df = pd.read_sql_query(full_query_string, conn)
       number_results = len(df)
 
+
       # Get number of sources in query
       df_source = df.groupby(['source'], as_index=False).nct_id.count()
       source_number = df_source['source'].nunique()
 
-      # Group by year
+
+      #
+      # TIMELINE: Group by year, add missing years
+      #
+
       df_year = df.groupby(['year_submitted'], as_index=False).nct_id.count()
-      add_missing_years(df_year, 'year_submitted', 'nct_id')
+
+      # Create df with missing years, zeros
+      columns = ['year_submitted', 'nct_id']
+      all_years = np.arange(1999, 2020)
+
+      timeline_missing_years = np.setdiff1d(all_years, pd.Series(df_year['year_submitted']))
+      zeros = ([0] * len(timeline_missing_years))
+      
+      zippedList =  list(zip(timeline_missing_years, zeros))
+      df_all_years = pd.DataFrame(zippedList, columns = columns)
+
+      # Fill missing years in timeline df
+      df_timeline = pd.concat([df_all_years, df_year], ignore_index=True)
+      df_timeline = df_timeline.sort_values(by='year_submitted')
+      
+      ############
+      ###
+
 
       # Trials by phase
-      df_phase_final = df.groupby(['phase'], as_index=False).nct_id.count()
-      # phase_missing_years(df_phase, 'year_submitted', 'phase', 'nct_id')
+      df_phase = df.groupby(['phase'], as_index=False).nct_id.count()
 
       # Data to JSON
       # df_timeline = json.loads(df_year.to_json(orient='records'))
@@ -141,8 +105,8 @@ def search():
          search = search, 
          number = number_results,
          source_number = source_number,
-         timeline = df_year_final.to_json(),
-         phase = df_phase_final.to_json())
+         timeline = df_timeline.to_json(),
+         phase = df_phase.to_json())
 
    else:
       return render_template('index.html', data = None)
