@@ -41,6 +41,24 @@ def build_query(search_field):
 
 
 # ADD MISSING YEARS IN TIME-BASED CHARTS
+# def add_missing_years(data, column_year, column_name_count):
+
+#    global df_year_final
+
+#    all_years = np.arange(1999, 2020)
+#    missing_years = [item for item in all_years if item not in data]
+#    zeros = ([0] * len(missing_years))
+
+#    columns = [column_year, column_name_count] #ie, ['year_submitted', 'nct_id']
+
+#    zippedList =  list(zip(missing_years, zeros))
+#    df_all_years = pd.DataFrame(zippedList, columns = columns) 
+
+#    df_year_final = pd.concat([data, df_all_years], ignore_index=True)
+#    df_year_final = df_year_final.sort_values(by=column_year).reset_index(drop=True)
+
+#    return df_year_final
+
 def add_missing_years(data, column_year, column_name_count):
 
    global df_year_final
@@ -102,15 +120,15 @@ def search():
       df = pd.read_sql_query(full_query_string, conn)
       number_results = len(df)
 
-      # Group by year
-      df_year_final = df.groupby(['year_submitted'], as_index=False).nct_id.count()
-      # add_missing_years(df_year, 'year_submitted', 'nct_id')
-
       # Get number of sources in query
       df_source = df.groupby(['source'], as_index=False).nct_id.count()
       source_number = df_source['source'].nunique()
 
-      # Trials by phase, year
+      # Group by year
+      df_year = df.groupby(['year_submitted'], as_index=False).nct_id.count()
+      add_missing_years(df_year, 'year_submitted', 'nct_id')
+
+      # Trials by phase
       df_phase_final = df.groupby(['phase'], as_index=False).nct_id.count()
       # phase_missing_years(df_phase, 'year_submitted', 'phase', 'nct_id')
 
