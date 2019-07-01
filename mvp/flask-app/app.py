@@ -11,6 +11,7 @@ import pandas as pd
 import json
 import numpy as np
 
+
 '''
 CONFIGURATION
 '''
@@ -18,6 +19,7 @@ app = Flask(__name__)
 app.config["DEBUG"] = True
 
 DATABASE = '../data/working_data/database.db'
+
 
 
 '''
@@ -40,6 +42,7 @@ def build_query(search_field):
    return full_query_string
 
 
+
 '''
 VIEWS
 '''
@@ -49,6 +52,7 @@ VIEWS
 @app.route('/index')
 def index():
    return render_template('index.html')
+
 
 # Results
 @app.route('/result', methods = ['GET', 'POST'])
@@ -63,11 +67,9 @@ def search():
       df = pd.read_sql_query(full_query_string, conn)
       number_results = len(df)
 
-
       # Get number of sources in query
       df_source = df.groupby(['source'], as_index=False).nct_id.count()
       source_number = df_source['source'].nunique()
-
 
       #
       # TIMELINE: Group by year, add missing years
@@ -89,20 +91,21 @@ def search():
       df_concat = pd.concat([df_all_years, df_year], ignore_index=True)
       df_timeline = df_concat.sort_values(['year_submitted'])
       df_timeline = df_timeline.set_index('year_submitted')
-      # df_timeline = df_timeline.set_index('year_submitted').reset_index()
       
       ############
       ###
 
-      # Trials by phase
+      #
+      # Trials by phase: groupby, add missing columns, fixed order
+      #
       df_phase = df.groupby(['phase'], as_index=False).nct_id.count()
+
+
+      
       df_phase = df_phase.set_index('phase')
 
-      # Data to JSON
-      # df_timeline = json.loads(df_year.to_json(orient='records'))
-      # df_phase_json = json.loads(df.to_json(orient='records'))
 
-
+      # Pass data to front-end
       return render_template("result.html", 
          search = search, 
          number = number_results,

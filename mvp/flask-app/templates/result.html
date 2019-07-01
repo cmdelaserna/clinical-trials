@@ -106,12 +106,10 @@
     const timelineData = d3.values(timeline.nct_id);
 
     // Data 2nd chart
-    var phase = {{ phase | safe }};
-    var phaseMax = d3.max(d3.values(phase.nct_id));
-    var phaseKeys = d3.keys(phase.nct_id); 
-    var phaseData = d3.values(phase.nct_id);
-
-    console.log(phase);
+    const phase = {{ phase | safe }};
+    const phaseMax = d3.max(d3.values(phase.nct_id));
+    const phaseKeys = d3.keys(phase.nct_id); 
+    const phaseData = d3.values(phase.nct_id);
     
     
 </script>
