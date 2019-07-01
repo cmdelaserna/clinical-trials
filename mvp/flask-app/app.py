@@ -79,15 +79,16 @@ def search():
       columns = ['year_submitted', 'nct_id']
       all_years = np.arange(1999, 2020)
 
-      timeline_missing_years = np.setdiff1d(all_years, pd.Series(df_year['year_submitted']))
-      zeros = ([0] * len(timeline_missing_years))
+      missing_years = np.setdiff1d(all_years, pd.Series(df_year['year_submitted']))
+      zeros = ([0] * len(missing_years))
       
-      zippedList =  list(zip(timeline_missing_years, zeros))
+      zippedList =  list(zip(missing_years, zeros))
       df_all_years = pd.DataFrame(zippedList, columns = columns)
 
       # Fill missing years in timeline df
-      df_timeline = pd.concat([df_all_years, df_year], ignore_index=True)
-      df_timeline = df_timeline.sort_values(by='year_submitted')
+      df_concat = pd.concat([df_all_years, df_year], ignore_index=True)
+      df_timeline = df_concat.sort_values(['year_submitted'])
+      df_timeline = df_timeline.set_index('year_submitted').reset_index()
       
       ############
       ###
