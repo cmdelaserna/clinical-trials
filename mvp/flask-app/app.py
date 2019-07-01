@@ -88,14 +88,15 @@ def search():
       # Fill missing years in timeline df
       df_concat = pd.concat([df_all_years, df_year], ignore_index=True)
       df_timeline = df_concat.sort_values(['year_submitted'])
-      df_timeline = df_timeline.set_index('year_submitted').reset_index()
+      df_timeline = df_timeline.set_index('year_submitted')
+      # df_timeline = df_timeline.set_index('year_submitted').reset_index()
       
       ############
       ###
 
-
       # Trials by phase
       df_phase = df.groupby(['phase'], as_index=False).nct_id.count()
+      df_phase = df_phase.set_index('phase')
 
       # Data to JSON
       # df_timeline = json.loads(df_year.to_json(orient='records'))

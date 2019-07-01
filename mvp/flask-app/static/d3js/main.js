@@ -45,7 +45,7 @@
                         .attr('height', wTimeline)
                         // .attr('height', function(d) {return yScaleTimeline(d);})
                         .attr('x', function(d, i){ return i * (wTimeline / timelineData.length);})
-                        // .attr('y', function (d) {return hTimeline - yScaleTimeline(d);})
+                        // .attr('y', hTimeline)
                         .attr('fill', function(d) {
                             if (d < 1) {
                                 return gray;
@@ -57,7 +57,7 @@
                             div.transition()    
                                 .duration(200)    
                                 .style("opacity", .9);    
-                            div .html(d + " entries "  + " in " + timelineDataYear[d])  
+                            div .html(i + " entries "  + " in " + timelineDataYear[d])  
                                 .style("left", (d3.event.pageX) - 10 + "px")   
                                 .style("top", (d3.event.pageY - 40) + "px")  
                             })          
@@ -73,13 +73,13 @@
     // BAR CHART (PHASES)
 
     // Chart variables
-    var wBar = 600;
-    var hBar = 300;
+    var wBar = 400;
+    var hBar = 200;
     var barPadding = 1;
 
     // Scales
-    var yScaleBar = d3.scaleLinear().domain([0, maxPhase]).range([0, hBar]);
-    var colorFillBar = d3.scaleLinear().domain([0, maxPhase]).range([colorPalette[0], colorPalette[1]]);
+    var yScaleBar = d3.scaleLinear().domain([0, phaseMax]).range([0, hBar]);
+    var colorFillBar = d3.scaleLinear().domain([0, phaseMax]).range([colorPalette[0], colorPalette[1]]);
 
     var svgPhase = d3.select("div#phase")
         .append("svg")
@@ -87,22 +87,22 @@
         .attr('height', hBar);
 
     var rectPhases = svgPhase.selectAll('rect')
-                      .data(dataPhase)
+                      .data(phaseData)
                       .enter()
                       .append('rect');
 
     // Phases: Early Phase 1, N/A, Phase 1, Phase 1/Phase 2, Phase 2, Phase 2/Phase 3, Phase 3
 
-    var attrPhases =  rectPhases.attr('width', wBar / dataPhase.length - barPadding)
+    var attrPhases =  rectPhases.attr('width', wBar / phaseData.length - barPadding)
                                 .attr('height', function(d) {return yScaleBar(d);})
-                                .attr('x', function(d, i){ return i * (wBar / dataPhase.length);})
+                                .attr('x', function(i, d){ return d * (wBar / phaseData.length);})
                                 .attr('y', function (d) {return hBar - yScaleBar(d);})
                                 .attr('fill', function(d) {return colorFillBar(d);})
-                                .on("mouseover", function(d) {    
+                                .on("mouseover", function(i, d) {    
                                       div.transition()    
                                           .duration(200)    
                                           .style("opacity", .9);    
-                                      div .html(d + "<br/>"  + keysPhase[d])  
+                                      div .html(i + "<br/>"  + phaseKeys[d])  
                                           .style("left", (d3.event.pageX) + "px")   
                                           .style("top", (d3.event.pageY - 40) + "px")  
                                       })          

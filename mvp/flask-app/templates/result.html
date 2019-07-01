@@ -100,19 +100,20 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 <script>
   // Data 1st chart
-    var timelineJSON = ({{ timeline | safe }});
-    var timelineDataYear = Object.values(timelineJSON.year_submitted);
-    var timelineData = Object.values(timelineJSON.nct_id);
-    var timelineMax = d3.max(timelineData);
-
-    console.log(timelineJSON);
-
+    const timeline = ({{ timeline | safe }});
+    const timelineMax = d3.max(d3.values(timeline.nct_id));
+    const timelineDataYear = d3.keys(timeline.nct_id);
+    const timelineData = d3.values(timeline.nct_id);
 
     // Data 2nd chart
     var phase = {{ phase | safe }};
-    var dataPhase = Object.values(phase.nct_id);
-    var keysPhase = Object.values(phase.phase); 
-    var maxPhase = d3.max(dataPhase);
+    var phaseMax = d3.max(d3.values(phase.nct_id));
+    var phaseKeys = d3.keys(phase.nct_id); 
+    var phaseData = d3.values(phase.nct_id);
+
+    console.log(phase);
+    
+    
 </script>
 
 <script src="{{ url_for('static', filename = 'd3js/main.js') }}"></script>
