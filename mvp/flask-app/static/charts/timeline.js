@@ -1,9 +1,10 @@
 // CHART: TIMELINE
 
     // Chart variables
-    const wTimeline = 350;
-    const hTimeline = 15;
+    const wTimeline = 600;
+    const hTimeline = 10;
     const barPadding = 1;
+    const marginBottom = 20;
 
     // Color Palette
     // https://gka.github.io/palettes/#/9|s|00429d,96ffea,ffffe0|ffffe0,ff005e,93003a|1|1
@@ -13,8 +14,10 @@
     const color = colorPalette[1];
 
     // Scales
-    var yScaleTimeline = d3.scaleLinear().domain([0, timelineMax]).range([0, hTimeline]);
-    var colorFillTimeline = d3.scaleLinear().domain([0, timelineMax]).range([colorPalette[0], colorPalette[1]]);
+    const yScaleTimeline = d3.scaleLinear().domain([0, timelineMax]).range([0, hTimeline]);
+    const xScaletimeline = d3.scaleBand().domain(timelineDataYear).range([0, wTimeline], 5, 5);
+    
+    const colorFillTimeline = d3.scaleLinear().domain([0, timelineMax]).range([colorPalette[0], colorPalette[1]]);
 
     // Div for the tooltip
     var div = d3.select("body")
@@ -25,11 +28,22 @@
     // Color scales
     // var colorOpacity = d3.scaleLinear().domain([0,maxStripe]).range([.3, 1]);
 
+
     // d3 chart
     var svgTimeline = d3.select("div#svgTimeline")
                         .append("svg")
                         .attr('width', wTimeline)
-                        .attr('height', hTimeline);
+                        .attr('height', hTimeline + marginBottom);
+
+     // xAxis
+    var xAxisTimeline = d3.axisBottom()
+                  .scale(xScaletimeline);
+
+    svgTimeline.append('g')
+            .attr("class", "x axis")
+            // .attr("transform", "translate(0," + 10 + ")")
+            .call(xAxisTimeline);
+
 
     var rectTimeline = svgTimeline.selectAll('rect')
                         .data(timelineData)

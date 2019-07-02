@@ -1,17 +1,15 @@
 // BAR CHART (PHASES)
 
     // Chart variables
-    const wBar = 400;
+    const wBar = 600;
     const hBar = 200;
-    const marginBottom = 20;
 
     // Scales
     const yScaleBar = d3.scaleLinear().domain([0, phaseMax]).range([0, hBar]);
-    const xScaleBar = d3.scaleLinear().domain([0, phaseData.length]).range([0, wBar]);
+    // const xScaleBar = d3.scaleLinear().domain([0, phaseData.length]).range([0, wBar]);
+    const xScaleBar = d3.scaleBand().domain(phaseKeys).range([0, wBar], 10, 10);
 
-    console.log(phaseKeys);
-
-    var colorFillBar = d3.scaleLinear().domain([0, phaseMax]).range([colorPalette[0], colorPalette[1]]);
+    const colorFillBar = d3.scaleLinear().domain([0, phaseMax]).range([colorPalette[0], colorPalette[1]]);
 
     // Main svg
     var svgPhase = d3.select("div#phase")
@@ -20,13 +18,13 @@
         .attr('height', hBar + marginBottom);
 
     // xAxis
-    var xAxis = d3.axisBottom()
+    var xAxisBar = d3.axisBottom()
                   .scale(xScaleBar);
 
     svgPhase.append('g')
             .attr("class", "x axis")
             .attr("transform", "translate(0," + hBar + ")")
-            .call(xAxis);
+            .call(xAxisBar);
 
 
     var rectPhases = svgPhase.selectAll('rect')
