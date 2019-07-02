@@ -4,9 +4,9 @@
 // CHART: TIMELINE
 
     // Chart variables
-    var wTimeline = 350;
-    var hTimeline = 15;
-    var barPadding = 1;
+    const wTimeline = 350;
+    const hTimeline = 15;
+    const barPadding = 1;
 
     // Color Palette
     // https://gka.github.io/palettes/#/9|s|00429d,96ffea,ffffe0|ffffe0,ff005e,93003a|1|1
@@ -73,18 +73,23 @@
     // BAR CHART (PHASES)
 
     // Chart variables
-    var wBar = 400;
-    var hBar = 200;
-    var barPadding = 1;
+    const wBar = 400;
+    const hBar = 200;
+    const marginBottom = 50;
 
     // Scales
     var yScaleBar = d3.scaleLinear().domain([0, phaseMax]).range([0, hBar]);
+    var xScaleBar = d3.scaleLinear().domain([0, phaseData.length]).range(0, wBar);
+
     var colorFillBar = d3.scaleLinear().domain([0, phaseMax]).range([colorPalette[0], colorPalette[1]]);
 
+    // X Axes
+    
     var svgPhase = d3.select("div#phase")
         .append("svg")
         .attr('width', wBar)
-        .attr('height', hBar);
+        .attr('height', hBar + marginBottom);
+
 
     var rectPhases = svgPhase.selectAll('rect')
                       .data(phaseData)
@@ -111,6 +116,7 @@
                                         .duration(500)    
                                         .style("opacity", 0); 
                                   });
+                                
 
     // end of chart
 
