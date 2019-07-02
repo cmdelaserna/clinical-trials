@@ -1,10 +1,12 @@
 // CHART: TIMELINE
 
     // Chart variables
-    const wTimeline = 600;
-    const hTimeline = 10;
+    const marginTimeline = 30;
+    const height = 50 - marginTimeline;
+
+    const wTimeline = 650;
+    const hTimeline = height + marginTimeline;
     const barPadding = 1;
-    const marginBottom = 20;
 
     // Color Palette
     // https://gka.github.io/palettes/#/9|s|00429d,96ffea,ffffe0|ffffe0,ff005e,93003a|1|1
@@ -33,15 +35,15 @@
     var svgTimeline = d3.select("div#svgTimeline")
                         .append("svg")
                         .attr('width', wTimeline)
-                        .attr('height', hTimeline + marginBottom);
+                        .attr('height', hTimeline);
 
      // xAxis
     var xAxisTimeline = d3.axisBottom()
-                  .scale(xScaletimeline);
+                        .scale(xScaletimeline);
 
     svgTimeline.append('g')
             .attr("class", "x axis")
-            // .attr("transform", "translate(0," + 10 + ")")
+            .attr("transform", "translate(0," + height + ")")
             .call(xAxisTimeline);
 
 
@@ -52,7 +54,7 @@
 
     var attrTimeline = rectTimeline
                         .attr('width', wTimeline / timelineData.length - barPadding)
-                        .attr('height', wTimeline)
+                        .attr('height', height)
                         // .attr('height', function(d) {return yScaleTimeline(d);})
                         .attr('x', function(d, i){ return i * (wTimeline / timelineData.length);})
                         // .attr('y', hTimeline)

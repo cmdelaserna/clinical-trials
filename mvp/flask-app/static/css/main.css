@@ -1,12 +1,22 @@
 
-
-
 input[type="text"] {
 	width:60%;
 }
 
 .svg {
 	margin: 0;
+}
+
+.x.axis {
+  color: #888;
+}
+
+g.tick line {
+  color: #fff;
+}
+
+path.domain {
+  display: none;
 }
 
 .tooltip {

@@ -1,11 +1,14 @@
 // BAR CHART (PHASES)
 
     // Chart variables
-    const wBar = 600;
-    const hBar = 200;
+    const marginBar = 20;
+    const wBar = 650;
+    const hBar = 200 - marginBar;
+
+    var wFullHeight = hBar + marginTimeline;
 
     // Scales
-    const yScaleBar = d3.scaleLinear().domain([0, phaseMax]).range([0, hBar]);
+    const yScaleBar = d3.scaleLinear().domain([0, phaseMax]).range([0, wFullHeight]);
     // const xScaleBar = d3.scaleLinear().domain([0, phaseData.length]).range([0, wBar]);
     const xScaleBar = d3.scaleBand().domain(phaseKeys).range([0, wBar], 10, 10);
 
@@ -15,7 +18,7 @@
     var svgPhase = d3.select("div#phase")
         .append("svg")
         .attr('width', wBar)
-        .attr('height', hBar + marginBottom);
+        .attr('height', wFullHeight);
 
     // xAxis
     var xAxisBar = d3.axisBottom()
