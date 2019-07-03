@@ -1,6 +1,6 @@
 
 input[type="text"] {
-	width:60%;
+	width:70%;
 }
 
 .svg {
@@ -9,7 +9,7 @@ input[type="text"] {
 
 .x.axis {
   color: #999;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 g.tick line {

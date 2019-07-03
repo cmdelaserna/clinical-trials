@@ -43,7 +43,7 @@ function responsiveChart(svg) {
     // Color Palette
     // https://gka.github.io/palettes/#/9|s|00429d,96ffea,ffffe0|ffffe0,ff005e,93003a|1|1
     
-    const colorPalette = ['#8abccf', '#20458b']; // blue
+    const colorPalette = ['#70ccf6', '#00a6ff']; // blue
     const gray = '#f1f1f1';
     const color = colorPalette[1];
 
