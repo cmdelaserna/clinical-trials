@@ -1,17 +1,49 @@
+
+// Responsive function
+
+function responsiveChart(svg) {
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+        width = parseInt(svg.style("width")),
+        height = parseInt(svg.style("height")),
+        aspect = width / height;
+
+    // add viewBox and preserveAspectRatio properties,
+    // and call resize so that svg resizes on inital page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+        .attr("perserveAspectRatio", "xMinYMid")
+        .call(resize);
+
+    // to register multiple listeners for same event type, 
+    // you need to add namespace, i.e., 'click.foo'
+    // necessary if you call invoke this function for multiple svgs
+    // api docs: https://github.com/mbostock/d3/wiki/Selections#on
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    // get width of container and resize svg to fit it
+    function resize() {
+        var targetWidth = parseInt(container.style("width"));
+        svg.attr("width", targetWidth);
+        svg.attr("height", Math.round(targetWidth / aspect));
+    }
+}
+
+
+
 // CHART: TIMELINE
 
     // Chart variables
     const marginTimeline = 30;
     const height = 50 - marginTimeline;
 
-    const wTimeline = 650;
+    const wTimeline = 960;
     const hTimeline = height + marginTimeline;
     const barPadding = 1;
 
     // Color Palette
     // https://gka.github.io/palettes/#/9|s|00429d,96ffea,ffffe0|ffffe0,ff005e,93003a|1|1
     
-    const colorPalette = ['#00a4f7', '#20458b']; // blue
+    const colorPalette = ['#8abccf', '#20458b']; // blue
     const gray = '#f1f1f1';
     const color = colorPalette[1];
 
@@ -35,7 +67,8 @@
     var svgTimeline = d3.select("div#svgTimeline")
                         .append("svg")
                         .attr('width', wTimeline)
-                        .attr('height', hTimeline);
+                        .attr('height', hTimeline)
+                        .call(responsiveChart);
 
      // xAxis
     var xAxisTimeline = d3.axisBottom()

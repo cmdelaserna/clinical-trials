@@ -2,7 +2,7 @@
 
     // Chart variables
     const marginBar = 20;
-    const wBar = 650;
+    const wBar = 960;
     const hBar = 200 - marginBar;
 
     var wFullHeight = hBar + marginTimeline;
@@ -18,7 +18,8 @@
     var svgPhase = d3.select("div#phase")
         .append("svg")
         .attr('width', wBar)
-        .attr('height', wFullHeight);
+        .attr('height', wFullHeight)
+        .call(responsiveChart);
 
     // xAxis
     var xAxisBar = d3.axisBottom()
@@ -28,7 +29,6 @@
             .attr("class", "x axis")
             .attr("transform", "translate(0," + hBar + ")")
             .call(xAxisBar);
-
 
     var rectPhases = svgPhase.selectAll('rect')
                       .data(phaseData)
