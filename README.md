@@ -49,8 +49,9 @@ Summary: Import JSON file, preoprocess data, export to sqlite as working db
 - Change data types
 - Remove /n
 - Create new column with all_text. Lowercase. Remove extra whitespace
-- Remove unnecesary columns. 
-- Create working db (sqlite)
+- Remove unnecesary columns 
+- Define schema and create working db (sqlite)
+- Create index for sqlite db
 
 
 #### scripts/ml-analysis.py
