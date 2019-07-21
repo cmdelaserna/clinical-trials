@@ -1,5 +1,8 @@
 '''
 Clinical Trials: Parse all XML files and save data in a json file
+# time python ./parse-all-trials.py
+time python ./unzip-setup.py
+
 '''
 
 import json

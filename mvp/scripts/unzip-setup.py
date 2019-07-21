@@ -1,3 +1,4 @@
+# time python ./unzip-setup.py
 import wget
 import sys
 import zipfile
