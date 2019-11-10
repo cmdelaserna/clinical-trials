@@ -20,8 +20,6 @@ app.config["DEBUG"] = True
 
 DATABASE = '../data/working_data/database.db'
 
-
-
 '''
 FUNCTIONS
 '''
@@ -29,19 +27,17 @@ FUNCTIONS
 # Query
 def build_query(search_field):
    # Global variables
-   global search, full_query_string
+   global search, full_query
    search = request.form   
 
    # Build query
    result_value = request.form[search_field]
-   first_sql = "SELECT * from all_trials WHERE all_text LIKE "
+   query = "SELECT * from all_trials WHERE all_text LIKE "
    term = "'%" + str(result_value) + "%'"
 
-   full_query_string = first_sql + term
+   full_query = query + term
 
-   return full_query_string
-
-
+   return full_query
 
 '''
 VIEWS
@@ -64,7 +60,7 @@ def search():
 
       # # Query, store data
       build_query('Search')
-      df = pd.read_sql_query(full_query_string, conn)
+      df = pd.read_sql_query(full_query, conn)
       number_results = len(df)
 
       # Get number of sources in query
@@ -99,8 +95,6 @@ def search():
       # Trials by phase: groupby, add missing columns, fixed order
       #
       df_phase = df.groupby(['phase'], as_index=False).nct_id.count()
-
-
       
       df_phase = df_phase.set_index('phase')
 

@@ -6,6 +6,9 @@
 -- clinicaltrials.gov bulk download (v.03)
 
 - v0.5
+-- clinicaltrials.gov bulk download (v.03). 
+
+- Roadmap
 -- Medline Plus (https://medlineplus.gov/xml.html)
 -- Unified Medical Language (https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html)
 -- Wikidocs
@@ -39,9 +42,9 @@ Summary: Parse XML files, export all data as a single JSON file
 - Time: [real 166m53.614s] 
 
 
-#### scripts/dataframe-setup.py
+#### scripts/db setup
 
-Summary: Import JSON file, preoprocess data, export to sqlite as working db
+Summary: Import JSON file, preprocess data, export all data to sqlite as working db
 
 - Import JSON file with all parsed data
 - Clean and rename columns
@@ -50,6 +53,9 @@ Summary: Import JSON file, preoprocess data, export to sqlite as working db
 - Remove /n
 - Create new column with all_text. Lowercase. Remove extra whitespace
 - Remove unnecesary columns 
+
+- Create new df to do TD-IDF calculations?
+
 - Define schema and create working db (sqlite)
 - Create index for sqlite db
 
