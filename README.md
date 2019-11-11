@@ -47,20 +47,14 @@ Summary: Parse XML files, export all data as a single JSON file
 Summary: Import JSON file, preprocess data, export all data to sqlite as working db
 
 - Import JSON file with all parsed data
-- Clean and rename columns
-- Add dates columns
-- Change data types
-- Remove /n
-- Create new column with all_text. Lowercase. Remove extra whitespace
-- Remove unnecesary columns 
-
-- Create new df to do TD-IDF calculations?
-
-- Define schema and create working db (sqlite)
-- Create index for sqlite db
+- Data cleaning and formatting
+- Create new column with all_text. 
+- Create new column with recruiting label
+- Export df to sqlite
+- Create index in all_text for speed
 
 
-#### scripts/ml-analysis.py
+#### scripts/ml-model.py
 
 Summary: [pending]
 
