@@ -18,7 +18,7 @@ CONFIGURATION
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
-DATABASE = '../data/working_data/database.db'
+DATABASE = '../data/working_data/working-database.db'
 
 '''
 FUNCTIONS
