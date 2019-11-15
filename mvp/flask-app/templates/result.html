@@ -83,12 +83,19 @@
 
       <div class="twelve columns">
         {% for key, value in search.items() %}
-        <p><strong>Clinical trials on {{value}} since 1999</strong>
+        <p>
+          <strong>Summary of clinical trials on {{value}}.</strong>
+          Explanation of what is going on here, how to use it.
         {% endfor %}
-      </p>
+        </p>
+        <button class="button-primary" id='summary-years'>1999 - 2019</button>
+        <button class="button" id='summary-years'>Last 3 years</button>
+        <button class="button" id='summary-years'>Last year</button>
+        <p>
           <div id="phase"></div>
           <div id="svgTimeline"></div>
-        </div>
+        </p>
+      </div>
 
 
 <!-- row -->
@@ -108,6 +115,9 @@
     const phaseMax = d3.max(d3.values(phase.nct_id));
     const phaseKeys = d3.keys(phase.nct_id); 
     const phaseData = d3.values(phase.nct_id);
+
+    // Buttons
+    const buttonYears = document.getElementById('summary-years');
     
     
 </script>
