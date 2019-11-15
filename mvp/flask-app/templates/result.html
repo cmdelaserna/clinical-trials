@@ -47,7 +47,6 @@
   <div class="container">
     <div class="row">
       <div class="twelve columns" style="margin-top: 3%">
-        <h4>Health Reports</h4>
 
   <!-- Form 
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -61,22 +60,22 @@
 
   <!-- Results
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-            
-    <!-- Summary -->
 
 <!-- Summary
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <div class="row">
+
+ <div class="row">
         <div class="twelve columns">
-      {% for key, value in search.items() %}
-      <p>
-      <code>
-        {{value}}:
+          {% for key, value in search.items() %}
+        <h3><strong>Health Reports</strong> {{value}}</h3>
+        <p><code>
          {{number}} entries, {{source_number}} sources
+      </code></p>
          {% endfor %}
-     </code></p>
-     <hr>
-   </div>
+         <hr>
+        </div>
+      </div>
+
 
 <!-- Graph: Timeline & Phases
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -84,8 +83,7 @@
       <div class="twelve columns">
         {% for key, value in search.items() %}
         <p>
-          <strong>Summary of clinical trials on {{value}}.</strong>
-          Explanation of what is going on here, how to use it.
+          Summary of clinical trials on {{value}} by research phase and year.
         {% endfor %}
         </p>
         <button class="button-primary" id='summary-years'>1999 - 2019</button>
@@ -95,8 +93,8 @@
           <div id="phase"></div>
           <div id="svgTimeline"></div>
         </p>
+      <hr>
       </div>
-
 
 <!-- row -->
 </div>
