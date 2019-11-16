@@ -87,8 +87,7 @@
         {% endfor %}
         </p>
         <button class="button-primary" id='summary-years'>1999 - 2019</button>
-        <button class="button" id='summary-years'>Last 3 years</button>
-        <button class="button" id='summary-years'>Last year</button>
+        <button class="button" id='recruiting'>Recruiting</button>
         <p>
           <div id="phase"></div>
           <div id="svgTimeline"></div>
@@ -102,20 +101,28 @@
 <!-- d3 scripts
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 <script>
-  // Data 1st chart
+
+    // Data 1st chart
     const timeline = ({{ timeline | safe }});
     const timelineMax = d3.max(d3.values(timeline.nct_id));
     const timelineDataYear = d3.keys(timeline.nct_id);
     const timelineData = d3.values(timeline.nct_id);
 
     // Data 2nd chart
-    const phase = {{ phase | safe }};
+    const phase = ({{ phase | safe }});
     const phaseMax = d3.max(d3.values(phase.nct_id));
     const phaseKeys = d3.keys(phase.nct_id); 
     const phaseData = d3.values(phase.nct_id);
 
+    // Query data
+    const query_data = ({{all_data | safe}});
+    console.log(query_data);
+
     // Buttons
-    const buttonYears = document.getElementById('summary-years');
+    const buttonAllYears = document.getElementById('summary-years');
+    buttonAllYears.onclick = function() {
+      console.log('test');
+    };
     
     
 </script>

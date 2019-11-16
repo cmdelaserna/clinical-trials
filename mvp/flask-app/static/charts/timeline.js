@@ -41,7 +41,6 @@ function responsiveChart(svg) {
     const barPadding = 1;
 
     // Color Palette
-    // https://gka.github.io/palettes/#/9|s|00429d,96ffea,ffffe0|ffffe0,ff005e,93003a|1|1
     
     const colorPalette = ['#70ccf6', '#3289b8']; // blue
     const gray = '#f1f1f1';
@@ -53,7 +52,7 @@ function responsiveChart(svg) {
     
     const colorFillTimeline = d3.scaleLinear().domain([0, timelineMax]).range([colorPalette[0], colorPalette[1]]);
 
-    // Div for the tooltip
+    // Tooltip
     var div = d3.select("body")
                 .append("div") 
                 .attr("class", "tooltip")      
@@ -61,7 +60,6 @@ function responsiveChart(svg) {
 
     // Color scales
     // var colorOpacity = d3.scaleLinear().domain([0,maxStripe]).range([.3, 1]);
-
 
     // d3 chart
     var svgTimeline = d3.select("div#svgTimeline")

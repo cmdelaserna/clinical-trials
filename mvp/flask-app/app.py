@@ -101,6 +101,7 @@ def search():
 
       # Pass data to front-end
       return render_template("result.html", 
+         all_data = df.to_json(),
          search = search, 
          number = number_results,
          source_number = source_number,
