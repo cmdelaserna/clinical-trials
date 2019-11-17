@@ -1,4 +1,8 @@
 
+h1 {
+  weight: 800;
+}
+
 input[type="text"] {
 	width:70%;
 }

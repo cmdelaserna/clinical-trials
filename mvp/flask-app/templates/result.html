@@ -115,8 +115,7 @@
     const phaseData = d3.values(phase.nct_id);
 
     // Query data
-    const query_data = ({{all_data | safe}});
-    console.log(query_data);
+    const data = ({{data_index | safe}});
 
     // Buttons
     const buttonAllYears = document.getElementById('summary-years');
