@@ -48,15 +48,7 @@ VIEWS
 @app.route('/index')
 def index():
 
-   # Load data
-   global index_query
-   index_query = "SELECT * from all_trials WHERE all_text LIKE ''"
-
-   conn = sqlite3.connect(DATABASE)      
-   default_query = pd.read_sql_query(index_query, conn)
-
-   return render_template('index.html', 
-      default = default_query.to_json(orient = 'index'))
+   return render_template('index.html')
 
 
 # Results
@@ -74,18 +66,12 @@ def search():
       ## Query, store data
       build_query('Search')
       df = pd.read_sql_query(full_query, conn)
-
-      # Select columns for table 
-      columns = ['nct_id', 'phase', 'source', 'year_submitted']
-      table = df[columns]
       
       number_results = len(df)
-      # df_index = df.set_index('nct_id')
 
       # Get number of sources in query
       df_source = df.groupby(['source'], as_index=False).nct_id.count()
       source_number = df_source['source'].nunique()
-
 
       #
       # TIMELINE: Group by year, add missing years
@@ -107,7 +93,6 @@ def search():
       df_concat = pd.concat([df_all_years, df_year], ignore_index=True)
       df_timeline = df_concat.sort_values(['year_submitted'])
       df_timeline = df_timeline.set_index('year_submitted')
-      
 
       #
       # Trials by phase: groupby, add missing columns, fixed order
@@ -116,6 +101,8 @@ def search():
       df_phase = df.groupby(['phase'], as_index=False).agg({'nct_id':'count', 'recruiting_labels':'sum'})
       
       df_phase = df_phase.set_index('phase')
+
+      df_phase.columns = ['All Trials', 'Recruiting']
 
 
       # Pass data to front-end
