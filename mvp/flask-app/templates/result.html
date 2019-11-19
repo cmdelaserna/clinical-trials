@@ -107,7 +107,7 @@
     const timeline = ({{ timeline | safe }});
     const timelineMax = d3.max(d3.values(timeline['All Trials']));
     const timelineDataYear = d3.keys(timeline['All Trials']);
-    const timelineData = d3.values(timeline['All Trials']);
+    var timelineData = d3.values(timeline['All Trials']);
 
     // Data 2nd chart
     const phase = ({{ phase | safe }});

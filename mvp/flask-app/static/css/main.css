@@ -41,5 +41,5 @@ path.domain {
 .search_term {
   text-decoration: none;
   display: inline-block;
-  border-bottom:1px dashed gray;
+  border-bottom:1px dashed grays;
 }
