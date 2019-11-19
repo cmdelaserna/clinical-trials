@@ -86,7 +86,19 @@
           Summary of clinical trials on {{value}} by research phase and year.
         {% endfor %}
         </p>
+<<<<<<< HEAD
         <button class="buttonRecruiting" id='recruiting'>Recruiting</button>
+=======
+
+        <!-- <label for="exampleRecipientInput">filter</label> -->
+      <!-- <select class="u-full-width" id="exampleRecipientInput">
+          <option value="Option 1">All Trials</option>
+        <option value="Option 2">Recruiting</option>
+      </select> -->
+
+        <!-- <button class="button-primary" id='summary-years'>1999 - 2019</button>
+        <button class="buttonYea" id='recruiting'>Recruiting</button> -->
+>>>>>>> f102726971fc6fdda036f86a16417f96694c15ff
         <p>
           <div id="phase"></div>
           <div id="svgTimeline"></div>
@@ -109,9 +121,9 @@
 
     // Data 2nd chart
     const phase = ({{ phase | safe }});
-    const phaseMax = d3.max(d3.values(phase.nct_id));
-    const phaseKeys = d3.keys(phase.nct_id); 
-    let phaseData = d3.values(phase.nct_id);
+    const phaseMax = d3.max(d3.values(phase['All Trials']));
+    const phaseKeys = d3.keys(phase['All Trials']); 
+    let phaseData = d3.values(phase['All Trials']);
 
     // Query data
     const data = ({{data_index | safe}});
@@ -123,13 +135,13 @@
 
 <script>
 // Buttons
-    const buttonRecruiting = document.getElementById('recruiting');
+    // const buttonRecruiting = document.getElementById('recruiting');
     
-    buttonRecruiting.onclick = function() { 
-      phaseData = d3.values(phase.recruiting_labels);
-      console.log(phaseData);
+    // buttonRecruiting.onclick = function() { 
+    //   phaseData = d3.values(phase.recruiting_labels);
+    //   console.log(phaseData);
 
-    };
+    // };
 
 </script>
 
