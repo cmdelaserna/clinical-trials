@@ -49,14 +49,16 @@ VIEWS
 def index():
 
    # Load data
-   global index_query
-   index_query = "SELECT * from all_trials WHERE all_text LIKE ''"
+   # global index_query
+   # index_query = "SELECT * from all_trials WHERE all_text LIKE ''"
 
-   conn = sqlite3.connect(DATABASE)      
-   default_query = pd.read_sql_query(index_query, conn)
+   # conn = sqlite3.connect(DATABASE)      
+   # default_query = pd.read_sql_query(index_query, conn)
 
-   return render_template('index.html', 
-      default = default_query.to_json(orient = 'index'))
+   # return render_template('index.html', 
+   #    default = default_query.to_json(orient = 'index'))
+
+      return render_template('index.html')
 
 
 # Results

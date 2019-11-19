@@ -1,11 +1,15 @@
 // BAR CHART (PHASES)
 
-    // Chart variables
-    const marginBar = 20;
-    const wBar = 960;
-    const hBar = 200 - marginBar;
-
+    // Chart dimensions and margins
+    var marginBar = 20;
+    var wBar = 960;
+    var hBar = 200 - marginBar;
     var wFullHeight = hBar + marginTimeline;
+
+    function phaseChart(intialData) {
+
+      
+    }
 
     // Scales
     const yScaleBar = d3.scaleLinear().domain([0, phaseMax]).range([0, wFullHeight]);
@@ -14,14 +18,16 @@
 
     const colorFillBar = d3.scaleLinear().domain([0, phaseMax]).range([colorPalette[0], colorPalette[1]]);
 
-    // Main svg
+    //
+    // Main svg - phase chart
+    //
     var svgPhase = d3.select("div#phase")
         .append("svg")
         .attr('width', wBar)
         .attr('height', wFullHeight)
         .call(responsiveChart);
 
-    // xAxis
+    // Initialize xAxis
     var xAxisBar = d3.axisBottom()
                   .scale(xScaleBar);
 
