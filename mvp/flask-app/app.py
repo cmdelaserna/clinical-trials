@@ -48,7 +48,6 @@ VIEWS
 @app.route('/index')
 def index():
 
-<<<<<<< HEAD
    # Load data
    # global index_query
    # index_query = "SELECT * from all_trials WHERE all_text LIKE ''"
@@ -60,9 +59,6 @@ def index():
    #    default = default_query.to_json(orient = 'index'))
 
       return render_template('index.html')
-=======
-   return render_template('index.html')
->>>>>>> f102726971fc6fdda036f86a16417f96694c15ff
 
 
 # Results

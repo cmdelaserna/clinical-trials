@@ -68,9 +68,9 @@
         <div class="twelve columns">
           {% for key, value in search.items() %}
         <h3><strong>Health Reports</strong> {{value}}</h3>
-        <p><code>
+        <!-- <p><code>
          {{number}} entries, {{source_number}} sources
-      </code></p>
+      </code></p> -->
          {% endfor %}
          <hr>
         </div>
@@ -80,25 +80,16 @@
 <!-- Graph: Timeline & Phases
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
-      <div class="twelve columns">
+      <div class="twelve columns" id= 'summary'>
         {% for key, value in search.items() %}
         <p>
-          Summary of clinical trials on {{value}} by research phase and year.
+          Summary of <strong>{{number}} clinical trials on {{value}}</strong> by research phase and registration year.
         {% endfor %}
+          <select class="u-pull-right" id="exampleRecipientInput" style = 'min-width: 200px'>
+            <option value="Option 1">All Trials</option>
+            <option value="Option 2">Recruiting</option>
+          </select>
         </p>
-<<<<<<< HEAD
-        <button class="buttonRecruiting" id='recruiting'>Recruiting</button>
-=======
-
-        <!-- <label for="exampleRecipientInput">filter</label> -->
-      <!-- <select class="u-full-width" id="exampleRecipientInput">
-          <option value="Option 1">All Trials</option>
-        <option value="Option 2">Recruiting</option>
-      </select> -->
-
-        <!-- <button class="button-primary" id='summary-years'>1999 - 2019</button>
-        <button class="buttonYea" id='recruiting'>Recruiting</button> -->
->>>>>>> f102726971fc6fdda036f86a16417f96694c15ff
         <p>
           <div id="phase"></div>
           <div id="svgTimeline"></div>
