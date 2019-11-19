@@ -83,17 +83,16 @@
       <div class="twelve columns" id= 'summary'>
         {% for key, value in search.items() %}
         <p>
-          Summary of <strong>{{number}} clinical trials on {{value}}</strong> by research phase and registration year.
+          Summary of <strong>{{number}} clinical trials </strong> by research phase and registration year.
         {% endfor %}
           <select class="u-pull-right" id="exampleRecipientInput" style = 'min-width: 200px'>
             <option value="Option 1">All Trials</option>
             <option value="Option 2">Recruiting</option>
           </select>
         </p>
-        <p>
-          <div id="phase"></div>
-          <div id="svgTimeline"></div>
-        </p>
+        <p><div id="phase"></div></p>
+        <p><div id="svgTimeline"></div></p>
+        <small>Source: clinicaltrials.gov</small>
       <hr>
       </div>
 
@@ -106,9 +105,9 @@
 
     // Data 1st chart
     const timeline = ({{ timeline | safe }});
-    const timelineMax = d3.max(d3.values(timeline.nct_id));
-    const timelineDataYear = d3.keys(timeline.nct_id);
-    const timelineData = d3.values(timeline.nct_id);
+    const timelineMax = d3.max(d3.values(timeline['All Trials']));
+    const timelineDataYear = d3.keys(timeline['All Trials']);
+    const timelineData = d3.values(timeline['All Trials']);
 
     // Data 2nd chart
     const phase = ({{ phase | safe }});

@@ -68,11 +68,9 @@ def search():
 
       #
       # Get data from query
-      #
 
       #Connect to db
       conn = sqlite3.connect(DATABASE)      
-
       ## Query, store data
       build_query('Search')
       df = pd.read_sql_query(full_query, conn)
@@ -85,9 +83,7 @@ def search():
 
       #
       # TIMELINE: Group by year, add missing years
-      #
-
-      df_year = df.groupby(['year_submitted'], as_index=False).nct_id.count()
+      df_year = df.groupby(['year_submitted'], as_index=False).agg({'nct_id':'count', 'recruiting_labels':'sum'})
 
       # Create df with missing years, zeros
       columns = ['year_submitted', 'nct_id']
@@ -100,9 +96,13 @@ def search():
       df_all_years = pd.DataFrame(zippedList, columns = columns)
 
       # Fill missing years in timeline df
-      df_concat = pd.concat([df_all_years, df_year], ignore_index=True)
+      df_concat = pd.concat([df_all_years, df_year], ignore_index=True, sort = True)
+
       df_timeline = df_concat.sort_values(['year_submitted'])
       df_timeline = df_timeline.set_index('year_submitted')
+      df_timeline.columns = ['All Trials', 'Recruiting']
+
+      df_timeline['Recruiting'].fillna(0, inplace = True)
 
       #
       # Trials by phase: groupby, add missing columns, fixed order
