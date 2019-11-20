@@ -7,6 +7,10 @@ input[type="text"] {
 	width:70%;
 }
 
+p.intro {
+  font-size: 1.2em;
+}
+
 .svg {
 	margin: 0;
 }
@@ -41,5 +45,5 @@ path.domain {
 .search_term {
   text-decoration: none;
   display: inline-block;
-  border-bottom:1px dashed grays;
+  border-bottom:1px dashed gray;
 }

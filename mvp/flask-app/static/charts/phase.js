@@ -1,5 +1,12 @@
 // BAR CHART (PHASES)
 
+    // Data
+    const phaseMax = d3.max(d3.values(phase['All Trials']));
+    const phaseKeys = d3.keys(phase['All Trials']); 
+    const phaseData = d3.values(phase['All Trials']);
+
+    const phaseDataRecruiting = d3.values(phase['Recruiting']);
+
     // Chart dimensions and margins
     var marginBar = 20;
     var wBar = 960;

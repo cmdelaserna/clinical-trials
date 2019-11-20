@@ -32,6 +32,14 @@ function responsiveChart(svg) {
 
 // CHART: TIMELINE
 
+    // Data
+    const timelineMax = d3.max(d3.values(timeline['All Trials']));
+    const timelineDataYear = d3.keys(timeline['All Trials']);
+    const timelineData = d3.values(timeline['All Trials']);
+
+    const timelineRecruiting = d3.values(timeline['Recruiting']);
+    const timelineRecruitingMax = d3.max(d3.values(timeline['Recruiting']));
+
     // Chart variables
     const marginTimeline = 30;
     const height = 50 - marginTimeline;
@@ -51,6 +59,7 @@ function responsiveChart(svg) {
     const xScaletimeline = d3.scaleBand().domain(timelineDataYear).range([0, wTimeline], 5, 5);
     
     const colorFillTimeline = d3.scaleLinear().domain([0, timelineMax]).range([colorPalette[0], colorPalette[1]]);
+    const colorTimelineRecruiting = d3.scaleLinear().domain([0, timelineRecruitingMax]).range([colorPalette[0], colorPalette[1]]);
 
     // Tooltip
     var div = d3.select("body")
@@ -68,17 +77,16 @@ function responsiveChart(svg) {
                         .call(responsiveChart);
 
     // d3 chart
-    function udpateData(newData) {
          // xAxis
-        var xAxisTimeline = d3.axisBottom()
-                            .scale(xScaletimeline);
+    var xAxisTimeline = d3.axisBottom()
+                        .scale(xScaletimeline);
 
-        svgTimeline.append('g')
-                .attr("class", "x axis")
-                .attr("transform", "translate(0," + height + ")")
-                .call(xAxisTimeline);
+    svgTimeline.append('g')
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxisTimeline);
 
-
+    function updateData(newData, colorRamp) {
         var rectTimeline = svgTimeline.selectAll('rect')
                             .data(newData)
                             .enter()
@@ -94,7 +102,7 @@ function responsiveChart(svg) {
                                 if (d < 1) {
                                     return gray;
                                 } else {
-                                    return colorFillTimeline(d);
+                                    return colorRamp(d);
                                 }
                             })
                             .on("mouseover", function(i, d) {    
@@ -112,16 +120,24 @@ function responsiveChart(svg) {
                             });
 
         attrTimeline.exit().remove();
-
-        // End function
+        // End chart function
         }
 
-    udpateData(timelineData);
+    updateData(timelineData, colorFillTimeline);
 
-    d3.select("#filter").on("change", function(d){
-    selectedGroup = this.value;
-    console.log(selectedGroup);
-    udpateData(selectedGroup);
-});
+    radioButtons = d3.selectAll(("input[name='filter']"))
 
-        
+    //radio button
+    radioButtons.on('change', function(d) {
+        var newData = this.value
+        if (newData == 'timelineData') {
+            updateData(timelineData, colorFillTimeline);
+            console.log(newData);
+        } else {
+            updateData(timelineRecruiting, colorTimelineRecruiting);
+            console.log(colorTimelineRecruiting);
+            console.log(newData);
+        }       
+
+    });
+
