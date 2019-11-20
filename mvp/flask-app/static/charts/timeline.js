@@ -118,11 +118,10 @@ function responsiveChart(svg) {
 
     udpateData(timelineData);
 
-    d3.select('#filter')
-      .on('change', function() {
-        var timelineData = eval(d3.select(this).property('value'));
-        console.log(d3.select(this).property('value'));
-        udpateData(timelineData);
-    });
+    d3.select("#filter").on("change", function(d){
+    selectedGroup = this.value;
+    console.log(selectedGroup);
+    udpateData(selectedGroup);
+});
 
         
