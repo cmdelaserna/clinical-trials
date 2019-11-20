@@ -51,6 +51,7 @@ function responsiveChart(svg) {
     // Color Palette
     
     const colorPalette = ['#70ccf6', '#3289b8']; // blue
+    const colorOrange = ['#ffc082', '#FF7F00'];
     const gray = '#f1f1f1';
     const color = colorPalette[1];
 
@@ -58,8 +59,8 @@ function responsiveChart(svg) {
     const yScaleTimeline = d3.scaleLinear().domain([0, timelineMax]).range([0, hTimeline]);
     const xScaletimeline = d3.scaleBand().domain(timelineDataYear).range([0, wTimeline], 5, 5);
     
-    const colorFillTimeline = d3.scaleLinear().domain([0, timelineMax]).range([colorPalette[0], colorPalette[1]]);
-    const colorTimelineRecruiting = d3.scaleLinear().domain([0, timelineRecruitingMax]).range([colorPalette[0], colorPalette[1]]);
+    const colorFillTimeline = d3.scaleLinear().domain([0, timelineMax]).range([colorOrange[0], colorOrange[1]]);
+    const colorTimelineRecruiting = d3.scaleLinear().domain([0, timelineRecruitingMax]).range([colorOrange[0], colorOrange[1]]);
 
     // Tooltip
     var div = d3.select("body")
@@ -115,8 +116,8 @@ function responsiveChart(svg) {
                                 })          
                             .on("mouseout", function(d) {   
                                 div.transition()    
-                                    .duration(500)    
-                                    .style("opacity", 0); 
+                                    .duration(1000)    
+                                    .style("opacity", 1); 
                             });
 
         attrTimeline.exit().remove();
@@ -126,18 +127,4 @@ function responsiveChart(svg) {
     updateData(timelineData, colorFillTimeline);
 
     radioButtons = d3.selectAll(("input[name='filter']"))
-
-    //radio button
-    radioButtons.on('change', function(d) {
-        var newData = this.value
-        if (newData == 'timelineData') {
-            updateData(timelineData, colorFillTimeline);
-            console.log(newData);
-        } else {
-            updateData(timelineRecruiting, colorTimelineRecruiting);
-            console.log(colorTimelineRecruiting);
-            console.log(newData);
-        }       
-
-    });
 
