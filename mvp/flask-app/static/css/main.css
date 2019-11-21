@@ -3,8 +3,21 @@ h1 {
   weight: 800;
 }
 
+h5.description {
+  margin-top: -0.5em;
+  color: #333;
+
+}
+
 input[type="text"] {
-	width:70%;
+	min-width:70%;
+  font-size: 1em;
+  color: #000;
+  font-weight: 800: 
+}
+
+input#search-input {
+  height: 3em;
 }
 
 p.intro {
@@ -33,6 +46,11 @@ path.domain {
   display: none;
 }
 
+input.button.button-primary {
+  background-color: #FF7F00;
+  border-color: #FF7F00;
+}
+
 .tooltip {
   position: absolute;
   text-align: center;
@@ -50,5 +68,15 @@ path.domain {
 .search_term {
   text-decoration: none;
   display: inline-block;
-  border-bottom:1px dashed gray;
+  color: #FF7F00;
+  padding: 3px;
+  /*border-bottom:1px solid #9f9f9f;*/
 }
+
+span.label-body {
+  margin-left: 0.3em;
+  margin-right: 0.7em;
+
+}
+
+
