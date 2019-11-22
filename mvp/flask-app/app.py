@@ -1,4 +1,4 @@
-# FLASK_APP=app.py FLASK_DEBUG=1 python -m flask run
+   # FLASK_APP=app.py FLASK_DEBUG=1 python -m flask run
 # To React: https://realpython.com/the-ultimate-flask-front-end/
 #
 #Configuration
@@ -106,8 +106,7 @@ def search():
 
       #
       # Trials by phase: groupby, add missing columns, fixed order
-      #
-      # df_phase = df.groupby(['phase'], as_index=False).nct_id.count()
+      #     
       df_phase = df.groupby(['phase'], as_index=False).agg({'nct_id':'count', 'recruiting_labels':'sum'})
       
       df_phase = df_phase.set_index('phase')
