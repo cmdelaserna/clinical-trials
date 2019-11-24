@@ -6,6 +6,9 @@
 
 from flask import Flask, render_template, request
 from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
+from flask_wtf.csrf import CsrfProtect
 import sqlite3
 import pandas as pd
 import json
@@ -17,22 +20,33 @@ CONFIGURATION
 '''
 app = Flask(__name__)
 app.config["DEBUG"] = True
+app.config['SECRET_KEY'] = 'key'
+
+# csrf = CsrfProtect()
+# csrf.init_app(app)
 
 DATABASE = '../data/working_data/working-database.db'
 
 '''
 FUNCTIONS
 '''
+# Validator class
+# class MyForm(FlaskForm):
+#     form = StringField('Search', validators=[DataRequired()])
+#     submit = SubmitField('Submit', validate_on_submit())
 
 # Query
 def build_query(search_field):
    # Global variables
    global search, full_query
-   search = request.form   
 
+   search = request.form 
    # Build query
    result_value = request.form[search_field]
-   query = "SELECT * from all_trials WHERE all_text LIKE "
+
+   column = 'condition'
+
+   query = "SELECT * from all_trials WHERE " + column + " LIKE "
    term = "'%" + str(result_value) + "%'"
 
    full_query = query + term
@@ -48,24 +62,15 @@ VIEWS
 @app.route('/index')
 def index():
 
-   # Load data
-   # global index_query
-   # index_query = "SELECT * from all_trials WHERE all_text LIKE ''"
-
-   # conn = sqlite3.connect(DATABASE)      
-   # default_query = pd.read_sql_query(index_query, conn)
-
-   # return render_template('index.html', 
-   #    default = default_query.to_json(orient = 'index'))
-
       return render_template('index.html')
 
 
 # Results
 @app.route('/result', methods = ['GET', 'POST'])
 def search():
+   # f = MyForm()
+   # if request.method == 'POST' and f.validate_on_submit():
    if request.method == 'POST':
-
       #
       # Get data from query
 
@@ -73,6 +78,7 @@ def search():
       conn = sqlite3.connect(DATABASE)      
       ## Query, store data
       build_query('Search')
+
       df = pd.read_sql_query(full_query, conn)
       
       number_results = len(df)
