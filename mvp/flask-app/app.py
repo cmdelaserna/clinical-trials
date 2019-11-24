@@ -6,9 +6,6 @@
 
 from flask import Flask, render_template, request
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired
-from flask_wtf.csrf import CsrfProtect
 import sqlite3
 import pandas as pd
 import json
@@ -22,18 +19,13 @@ app = Flask(__name__)
 app.config["DEBUG"] = True
 app.config['SECRET_KEY'] = 'key'
 
-# csrf = CsrfProtect()
-# csrf.init_app(app)
+app.config['WHOOSH_BASE'] = '../data/whooshBase.db'
 
 DATABASE = '../data/working_data/working-database.db'
 
 '''
-FUNCTIONS
+FUNCTIONS & CLASSES
 '''
-# Validator class
-# class MyForm(FlaskForm):
-#     form = StringField('Search', validators=[DataRequired()])
-#     submit = SubmitField('Submit', validate_on_submit())
 
 # Query
 def build_query(search_field):
@@ -68,8 +60,7 @@ def index():
 # Results
 @app.route('/result', methods = ['GET', 'POST'])
 def search():
-   # f = MyForm()
-   # if request.method == 'POST' and f.validate_on_submit():
+
    if request.method == 'POST':
       #
       # Get data from query
