@@ -102,6 +102,21 @@ def process_result():
       df_phase = df_phase.set_index('phase')
       df_phase.columns = ['All Trials', 'Recruiting']
 
+def generate_table(data):
+   global table
+   
+   columns = ['brief_title', 'condition', 'year_last_updated', 'overall_status', 'url']
+   table = data[columns].head(11)
+   
+   # title = data.brief_title
+   # condition = data.condition
+   # year = data.year_last_updated
+   # status = data.overall_status
+   # url = data.url
+   
+   return table
+
+
 '''
 VIEWS
 '''
@@ -119,9 +134,11 @@ def search():
    if request.method == 'POST':     
       build_query('Search')
       process_result()
+      generate_table(df)
 
       return render_template("result.html", 
          data_index = df.to_json(orient = 'index'),
+         table = table.to_html(header=False, classes = 'td'),
          search = search, 
          number = number_results,
          source_number = source_number,
