@@ -6,7 +6,8 @@
 
 from flask import Flask, render_template, request
 from flask_wtf import FlaskForm
-import sqlite3
+# import sqlite3
+from sqlalchemy import create_engine
 import pandas as pd
 import json
 import numpy as np
@@ -19,9 +20,18 @@ app = Flask(__name__)
 app.config["DEBUG"] = True
 app.config['SECRET_KEY'] = 'key'
 
-app.config['WHOOSH_BASE'] = '../data/whooshBase.db'
+# app.config['WHOOSH_BASE'] = '../data/whooshBase.db'
 
-DATABASE = '../data/working_data/working-database.db'
+#sqlite
+# DATABASE = '../data/working_data/working-database.db'
+
+#postgres
+host = 'postgresql://cms@localhost:5432/'
+db = 'ClinicalTrials'
+connection = host + db
+engine = create_engine(connection)
+
+
 
 '''
 FUNCTIONS & CLASSES
@@ -36,12 +46,13 @@ def build_query(search_field):
    # Build query
    result_value = request.form[search_field]
 
-   column = 'condition'
+   full_query = "SELECT * FROM " + result_value
 
-   query = "SELECT * from all_trials WHERE " + column + " LIKE "
-   term = "'%" + str(result_value) + "%'"
-
-   full_query = query + term
+   #sqlite query
+   # column = 'condition'
+   # query = "SELECT * from all_trials WHERE " + column + " LIKE "
+   # term = "'%" + str(result_value) + "%'"
+   # full_query = query + term
 
    return full_query
 
@@ -56,22 +67,21 @@ def index():
 
       return render_template('index.html')
 
-
 # Results
 @app.route('/result', methods = ['GET', 'POST'])
 def search():
 
    if request.method == 'POST':
       #
-      # Get data from query
-
-      #Connect to db
-      conn = sqlite3.connect(DATABASE)      
+      # Get data from query     
       ## Query, store data
       build_query('Search')
 
-      df = pd.read_sql_query(full_query, conn)
+      df = pd.read_sql_query(full_query, con = engine)
       
+      #
+      # return data
+      #
       number_results = len(df)
 
       # Get number of sources in query
@@ -85,29 +95,21 @@ def search():
       # Create df with missing years, zeros
       columns = ['year_submitted', 'nct_id']
       all_years = np.arange(1999, 2020)
-
       missing_years = np.setdiff1d(all_years, pd.Series(df_year['year_submitted']))
       zeros = ([0] * len(missing_years))
-      
       zippedList =  list(zip(missing_years, zeros))
       df_all_years = pd.DataFrame(zippedList, columns = columns)
 
       # Fill missing years in timeline df
       df_concat = pd.concat([df_all_years, df_year], ignore_index=True, sort = True)
-
       df_timeline = df_concat.sort_values(['year_submitted'])
       df_timeline = df_timeline.set_index('year_submitted')
       df_timeline.columns = ['All Trials', 'Recruiting']
-
       df_timeline['Recruiting'].fillna(0, inplace = True)
 
-      #
-      # Trials by phase: groupby, add missing columns, fixed order
-      #     
+      # Trials by phase: groupby, add missing columns, fixed order    
       df_phase = df.groupby(['phase'], as_index=False).agg({'nct_id':'count', 'recruiting_labels':'sum'})
-      
       df_phase = df_phase.set_index('phase')
-
       df_phase.columns = ['All Trials', 'Recruiting']
 
 
