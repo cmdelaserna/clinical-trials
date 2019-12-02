@@ -6,11 +6,11 @@
 
 from flask import Flask, render_template, request
 from flask_wtf import FlaskForm
-# import sqlite3
 from sqlalchemy import create_engine
 import pandas as pd
 import json
 import numpy as np
+# import sqlite3
 
 
 '''
@@ -40,51 +40,41 @@ FUNCTIONS & CLASSES
 # Query
 def build_query(search_field):
    # Global variables
-   global search, full_query
+   global search, full_query, df
 
-   search = request.form 
-   # Build query
-   result_value = request.form[search_field]
+   # Create a df with search_terms table
+   table_name = 'search_terms'
+   search_table = "SELECT * FROM " + table_name
+   partial_query = pd.read_sql_query(search_table, con = engine)
 
-   full_query = "SELECT * FROM " + result_value
+   # Look for search value in table
+   search = request.form
 
-   #sqlite query
-   # column = 'condition'
-   # query = "SELECT * from all_trials WHERE " + column + " LIKE "
-   # term = "'%" + str(result_value) + "%'"
-   # full_query = query + term
+   result_value = request.form[search_field].lower()
 
-   return full_query
-
-'''
-VIEWS
-'''
-
-# Index
-@app.route('/', methods = ['GET', 'POST'])
-@app.route('/index')
-def index():
-
-      return render_template('index.html')
-
-# Results
-@app.route('/result', methods = ['GET', 'POST'])
-def search():
-
-   if request.method == 'POST':
-      #
-      # Get data from query     
-      ## Query, store data
-      build_query('Search')
-
+   try:
+      table_value = partial_query[partial_query['search_term'].str.match(result_value)]
+      table_value = table_value.return_table.values[0]
+      # Final query
+      full_query = "SELECT * FROM " + table_value
       df = pd.read_sql_query(full_query, con = engine)
-      
-      #
-      # return data
-      #
+
+      return search, full_query, df
+   
+   except:
+      empty_query = "SELECT * FROM celiac limit 0"
+      df = pd.read_sql_query(empty_query, con = engine)
+
+      return search, full_query, df
+
+
+
+# Process search results
+def process_result():
+      global number_results, source_number, df_timeline, df_phase
+
       number_results = len(df)
 
-      # Get number of sources in query
       df_source = df.groupby(['source'], as_index=False).nct_id.count()
       source_number = df_source['source'].nunique()
 
@@ -112,8 +102,24 @@ def search():
       df_phase = df_phase.set_index('phase')
       df_phase.columns = ['All Trials', 'Recruiting']
 
+'''
+VIEWS
+'''
 
-      # Pass data to front-end
+# Index
+@app.route('/', methods = ['GET', 'POST'])
+@app.route('/index')
+def index():
+      return render_template('index.html')
+
+# Results
+@app.route('/result', methods = ['GET', 'POST'])
+def search():
+
+   if request.method == 'POST':     
+      build_query('Search')
+      process_result()
+
       return render_template("result.html", 
          data_index = df.to_json(orient = 'index'),
          search = search, 

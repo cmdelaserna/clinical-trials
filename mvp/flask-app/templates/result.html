@@ -67,7 +67,7 @@
  <div class="row">
         <div class="twelve columns">
           {% for key, value in search.items() %}
-        <h2><strong>Health Reports <div class = "search_term">{{value}}</div></strong></h2>
+        <h2><strong>Health Reports <div class = "search_term">{% filter lower %}{{value}}{% endfilter %}</div></strong></h2>
         <!-- <p><code>
          {{number}} entries, {{source_number}} sources
       </code></p> -->
@@ -83,7 +83,7 @@
       <div class="twelve columns" id= 'summary'>
         {% for key, value in search.items() %}
         <h5>
-          Summary of <strong>{{number}} clinical trials </strong> on <strong>{{value}}</strong>. 
+          Summary of <strong>{{number}} clinical trials </strong> on <strong>{% filter lower %}{{value}}{% endfilter %}</strong>. 
           <class id = "description"> There are Description automatically generated based on results. Description automatically generated based on results.s</class>
         {% endfor %}
         </h5>
