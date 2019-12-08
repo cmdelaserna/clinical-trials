@@ -2,18 +2,17 @@
 
 
 ### Data sources:
-- v0.3
--- clinicaltrials.gov bulk download (v.03)
-
-- v0.5
--- clinicaltrials.gov bulk download (v.03). 
+- v0.2
+Postgres + flask back-end. 
+d3 front-end display a summary of clinical trials based on a query. 
+Pubmed & clinical trials offline databases on linux pc. 
 
 - Roadmap
--- Medline Plus (https://medlineplus.gov/xml.html)
--- Unified Medical Language (https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html)
--- Wikidocs
+v0.3 - Logic to classify trials and assess a research pipeline.
+v0.4 - major bugs fixed. 
+v0.5 Login system. 
 
-### Workflow: 
+### Scripts: 
 
 #### scripts/unzip-setup.py
 
@@ -54,20 +53,6 @@ Summary: Import JSON file, preprocess data, export all data to sqlite as working
 - Create index in all_text for speed
 
 
-#### scripts/ml-model.py
-
-Summary: [pending]
-
-
-to-do: Extract entities from all data. Extract topics from each file? 
-
-
-
-#### Flask APP
-- Build query, search for matching string. 
-- Function to add missing years in time-based charts. 
-- Calculate Trial Index based on search results.
-- Extract topics from search results (in preprocess?)
-- Pass data to front-end (decide on datasets)
-
-
+### Notebooks: 
+- Notebook 4: Create PostgresDB, pre-defined searches. 
+- Notebook 5: Pyspark + pubmed database
