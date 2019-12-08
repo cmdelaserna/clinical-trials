@@ -1,7 +1,5 @@
 # clinical-trials
 
-
-### Data sources:
 - v0.2
 Postgres + flask back-end. 
 d3 front-end display a summary of clinical trials based on a query. 
