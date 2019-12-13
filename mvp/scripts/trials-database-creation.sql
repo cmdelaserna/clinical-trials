@@ -98,4 +98,29 @@ WHEN overall_status = 'Recruiting' or overall_status = 'Not yet recruiting' THEN
 ALTER TABLE trials
 ALTER COLUMN recruiting_status TYPE bool USING recruiting_status::boolean;
 
+-- Create search_term table
+
+CREATE TABLE search_terms(
+search_term TEXT UNIQUE NOT NULL,
+return_table VARCHAR (50) NOT NULL);
+
+ALTER TABLE search_terms ADD PRIMARY KEY (search_term);
+
+-- Insert data manually
+INSERT INTO search_terms (search_term, return_table)
+VALUES ( 'breast cancer', 'breastcancer');
+
+-- Search and create table from query
+CREATE TABLE celiac
+as
+select * from trials
+where to_tsvector(description) @@ to_tsquery('celiac | gluten');
+
+CREATE TABLE breastcancer
+as
+select * from trials
+where to_tsvector(description) @@ to_tsquery('breast & cancer');
+
+
+
 
