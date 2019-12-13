@@ -98,6 +98,12 @@ WHEN overall_status = 'Recruiting' or overall_status = 'Not yet recruiting' THEN
 ALTER TABLE trials
 ALTER COLUMN recruiting_status TYPE bool USING recruiting_status::boolean;
 
+-- Create all_text column
+ALTER TABLE trials
+ADD COLUMN all_text text;
+
+** pending query
+
 -- Create search_term table
 
 CREATE TABLE search_terms(
