@@ -27,7 +27,7 @@ app.config['SECRET_KEY'] = 'key'
 
 #postgres
 host = 'postgresql://cms@localhost:5432/'
-db = 'ClinicalTrials'
+db = 'aact'
 connection = host + db
 engine = create_engine(connection)
 
@@ -70,49 +70,45 @@ def build_query(search_field):
 
 
 # Process search results
-def process_result():
+def process_result(source = 'source', date = 'study_first_posted_date', recruiting = 'recruiting_status'):
       global number_results, source_number, df_timeline, df_phase
 
       number_results = len(df)
 
-      df_source = df.groupby(['source'], as_index=False).nct_id.count()
-      source_number = df_source['source'].nunique()
+      df_source = df.groupby([source], as_index=False).nct_id.count()
+      source_number = df_source[source].nunique()
 
       #
       # TIMELINE: Group by year, add missing years
-      df_year = df.groupby(['year_submitted'], as_index=False).agg({'nct_id':'count', 'recruiting_labels':'sum'})
+      df_year = df.groupby([date], as_index=False).agg({'nct_id':'count', recruiting:'sum'})
 
       # Create df with missing years, zeros
-      columns = ['year_submitted', 'nct_id']
+      columns = [date, 'nct_id']
       all_years = np.arange(1999, 2020)
-      missing_years = np.setdiff1d(all_years, pd.Series(df_year['year_submitted']))
+      missing_years = np.setdiff1d(all_years, pd.Series(df_year[date]))
       zeros = ([0] * len(missing_years))
       zippedList =  list(zip(missing_years, zeros))
       df_all_years = pd.DataFrame(zippedList, columns = columns)
 
       # Fill missing years in timeline df
       df_concat = pd.concat([df_all_years, df_year], ignore_index=True, sort = True)
-      df_timeline = df_concat.sort_values(['year_submitted'])
-      df_timeline = df_timeline.set_index('year_submitted')
+      # df_timeline = df_concat.sort_values([date])
+      df_timeline = df_concat
+      df_timeline = df_timeline.set_index(date)
       df_timeline.columns = ['All Trials', 'Recruiting']
       df_timeline['Recruiting'].fillna(0, inplace = True)
 
       # Trials by phase: groupby, add missing columns, fixed order    
-      df_phase = df.groupby(['phase'], as_index=False).agg({'nct_id':'count', 'recruiting_labels':'sum'})
+      df_phase = df.groupby(['phase'], as_index=False).agg({'nct_id':'count', recruiting:'sum'})
       df_phase = df_phase.set_index('phase')
       df_phase.columns = ['All Trials', 'Recruiting']
 
 def generate_table(data):
    global table
    
-   columns = ['brief_title', 'condition', 'year_last_updated', 'overall_status', 'url']
+   # Pending: adding url to dataframe
+   columns = ['official_title', 'mesh_terms', 'study_first_posted_date', 'recruiting_status']
    table = data[columns].head(11)
-   
-   # title = data.brief_title
-   # condition = data.condition
-   # year = data.year_last_updated
-   # status = data.overall_status
-   # url = data.url
    
    return table
 
