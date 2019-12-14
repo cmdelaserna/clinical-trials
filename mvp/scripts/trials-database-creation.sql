@@ -28,27 +28,28 @@ SELECT
     source
     FROM ctgov.studies;
 
+--
+-- Add column with brief_description
 
- -- Add column with brief_description
- SELECT 
- 	nct_id, 
-   'not in summaries' as note 
-FROM 
-   trials 
-EXCEPT
-   SELECT 
-    nct_id, 
-    'not in summaries' as note 
-  FROM 
-    ctgov.brief_summaries;
+-- SELECT 
+--  	nct_id, 
+--    'not in summaries' as note 
+-- FROM 
+--    trials 
+-- EXCEPT
+--    SELECT 
+--     nct_id, 
+--     'not in summaries' as note 
+--   FROM 
+--     ctgov.brief_summaries;
 
 ALTER TABLE trials
 ADD COLUMN description text;
 
 UPDATE trials AS t1 
-SET description = t2.brief_summaries
+SET description = t2.description
 FROM brief_summaries AS t2
-WHERE t1.nct_id = t2.nct_id
+WHERE t1.nct_id = t2.nct_id;
 
 
 -- Add column with mesh_terms
@@ -83,7 +84,7 @@ group by
 	nct_id;
 
 UPDATE trials AS t1 
-SET interventions = t2.mesh_terms
+SET interventions = t2.names
 FROM all_interventions AS t2
 WHERE t1.nct_id = t2.nct_id
 
