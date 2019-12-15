@@ -105,6 +105,14 @@ ADD COLUMN all_text text;
 
 ** pending query
 
+-- Create posted year column
+ALTER TABLE trials
+ADD COLUMN year_posted text;
+
+UPDATE trials SET year_posted = EXTRACT (YEAR FROM "study_first_submitted_qc_date");
+
+ALTER TABLE trials ALTER COLUMN year_posted TYPE integer USING year_posted::integer;
+
 -- Create search_term table
 
 CREATE TABLE search_terms(
