@@ -1,4 +1,9 @@
-s
+body {
+  background: #fffefa;
+  font-size: 1.6em;
+  color: #3c4043;
+}
+
 h1 {
   weight: 800;
 }
@@ -22,6 +27,10 @@ input#search-input {
 
 p.intro {
   font-size: 1em;
+}
+
+p.filter-buttons {
+  font-size: 0.8em;
 }
 
 .svg {
@@ -68,7 +77,9 @@ input.button.button-primary {
 .search_term {
   text-decoration: none;
   display: inline-block;
-  color: #FF7F00;
+  /*color: #FF7F00;*/ /*orange*/
+  color: #1889b5; /*blue
+
   padding: 3px;
   /*border-bottom:1px solid #9f9f9f;*/
 }

@@ -21,8 +21,8 @@
     // const xScaleBar = d3.scaleLinear().domain([0, phaseData.length]).range([0, wBar]);
     const xScaleBar = d3.scaleBand().domain(phaseKeys).range([0, wBar], 10, 10);
 
-    const colorFillBar = d3.scaleLinear().domain([0, phaseMax]).range([colorOrange[0], colorOrange[1]]);
-    const colorBarRecruiting = d3.scaleLinear().domain([0, phaseRecruitingMax]).range([colorOrange[0], colorOrange[1]]);
+    const colorFillBar = d3.scaleLinear().domain([0, phaseMax]).range([colorPalette[0], colorPalette[1]]);
+    const colorBarRecruiting = d3.scaleLinear().domain([0, phaseRecruitingMax]).range([colorPalette[0], colorPalette[1]]);
 
     //
     // Main svg - phase chart

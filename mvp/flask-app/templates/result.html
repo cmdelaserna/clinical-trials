@@ -46,7 +46,7 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <div class="container">
     <div class="row">
-      <div class="twelve columns" style="margin-top: 3%">
+      <div class="twelve columns" style="margin-top: 2%">
 
   <!-- Search Form 
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -56,6 +56,7 @@
           <input class = 'button' type = "submit" value = "submit" />
         </p>
         </form>
+        <hr>
         </div>
 
   <!-- Results
@@ -67,12 +68,11 @@
  <div class="row">
         <div class="twelve columns">
           {% for key, value in search.items() %}
-        <h2><strong>Health Reports <div class = "search_term">{% filter lower %}{{value}}{% endfilter %}</div></strong></h2>
+        <h3><strong>Health Reports <div class = "search_term">{% filter lower %}{{value}}{% endfilter %}</div></strong></h3>
         <!-- <p><code>
          {{number}} entries, {{source_number}} sources
       </code></p> -->
          {% endfor %}
-         <hr>
         </div>
       </div>
 
@@ -82,13 +82,13 @@
 
       <div class="twelve columns" id= 'summary'>
         {% for key, value in search.items() %}
-        <h5>
+        <p>
           Summary of <strong>{{number}} clinical trials </strong> on <strong>{% filter lower %}{{value}}{% endfilter %}</strong>. 
           <class id = "description"> There are Description automatically generated based on results. Description automatically generated based on results.s</class>
         {% endfor %}
-        </h5>
-        <p>
-         <label class="u-pull-left" style='margin-bottom: 2em; margin-top: 1em'>
+        </p>
+        <p class='filter-buttons'>
+         <label class="u-pull-right" style='margin-bottom: 2em; margin-top: 0.5em'>
             <input type="radio" name ='filter' checked = 'checked' value = 'timelineData'>
             <span class="label-body">All trials between 1999 and 2019</span>
             <input type="radio" name ='filter' value = 'timelineRecruiting'>
@@ -106,14 +106,7 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
    <div class="twelve columns" id= 'table'>
-      {{ table|safe }}
-      <table class="u-full-width">
-        <tbody>
-          <tr>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
+      <!-- <p>{{ table|safe }}</p> -->
      </div>
 
 

@@ -50,7 +50,7 @@ function responsiveChart(svg) {
 
     // Color Palette
     
-    const colorPalette = ['#70ccf6', '#3289b8']; // blue
+    const colorPalette = ['#D0EFFB', '#1889b5']; // blue
     const colorOrange = ['#ffc082', '#FF7F00'];
     const gray = '#f1f1f1';
     const color = colorPalette[1];
@@ -59,8 +59,8 @@ function responsiveChart(svg) {
     const yScaleTimeline = d3.scaleLinear().domain([0, timelineMax]).range([0, hTimeline]);
     const xScaletimeline = d3.scaleBand().domain(timelineDataYear).range([0, wTimeline], 5, 5);
     
-    const colorFillTimeline = d3.scaleLinear().domain([0, timelineMax]).range([colorOrange[0], colorOrange[1]]);
-    const colorTimelineRecruiting = d3.scaleLinear().domain([0, timelineRecruitingMax]).range([colorOrange[0], colorOrange[1]]);
+    const colorFillTimeline = d3.scaleLinear().domain([0, timelineMax]).range([colorPalette[0], colorPalette[1]]);
+    const colorTimelineRecruiting = d3.scaleLinear().domain([0, timelineRecruitingMax]).range([colorPalette[0], colorPalette[1]]);
 
     // Tooltip
     var div = d3.select("body")
