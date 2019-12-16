@@ -28,20 +28,7 @@ SELECT
     source
     FROM ctgov.studies;
 
---
--- Add column with brief_description
-
--- SELECT 
---  	nct_id, 
---    'not in summaries' as note 
--- FROM 
---    trials 
--- EXCEPT
---    SELECT 
---     nct_id, 
---     'not in summaries' as note 
---   FROM 
---     ctgov.brief_summaries;
+-- create description column
 
 ALTER TABLE trials
 ADD COLUMN description text;
@@ -99,12 +86,6 @@ WHEN overall_status = 'Recruiting' or overall_status = 'Not yet recruiting' THEN
 ALTER TABLE trials
 ALTER COLUMN recruiting_status TYPE bool USING recruiting_status::boolean;
 
--- Create all_text column
-ALTER TABLE trials
-ADD COLUMN all_text text;
-
-** pending query
-
 -- Create posted year column
 ALTER TABLE trials
 ADD COLUMN year_posted text;
@@ -112,6 +93,15 @@ ADD COLUMN year_posted text;
 UPDATE trials SET year_posted = EXTRACT (YEAR FROM "study_first_submitted_qc_date");
 
 ALTER TABLE trials ALTER COLUMN year_posted TYPE integer USING year_posted::integer;
+
+-- create url column
+ALTER TABLE trials
+ADD COLUMN url text;
+
+UPDATE trials SET 
+url = concat('https://clinicaltrials.gov/ct2/show/', nct_id);
+
+
 
 -- Create search_term table
 
@@ -136,6 +126,7 @@ as
 select * from trials
 where to_tsvector(description) @@ to_tsquery('breast & cancer');
 
+-- Create summary table for pre-defined searchers
 
 
 

@@ -52,7 +52,7 @@ function responsiveChart(svg) {
     
     const colorPalette = ['#D0EFFB', '#1889b5']; // blue
     const colorOrange = ['#ffc082', '#FF7F00'];
-    const gray = '#f1f1f1';
+    const gray = '#ffffff';
     const color = colorPalette[1];
 
     // Scales

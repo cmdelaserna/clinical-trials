@@ -1,5 +1,5 @@
 body {
-  background: #fffefa;
+  background: #f5f4f2;
   font-size: 1.6em;
   color: #3c4043;
 }
@@ -55,10 +55,10 @@ path.domain {
   display: none;
 }
 
-input.button.button-primary {
+/*input.button.button-primary {
   background-color: #FF7F00;
   border-color: #FF7F00;
-}
+}*/
 
 .tooltip {
   position: absolute;
