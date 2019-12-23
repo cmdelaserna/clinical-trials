@@ -133,7 +133,8 @@ def search():
 
       return render_template("result.html", 
          data_index = df.to_json(orient = 'index'),
-         table = table.to_html(header=False, classes = 'td'),
+         # table = table.to_html(header=False),
+         table = table.to_json(),
          search = search, 
          number = number_results,
          source_number = source_number,

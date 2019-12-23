@@ -10,10 +10,10 @@
     const phaseRecruitingMax = d3.max(d3.values(phase['Recruiting'])); 
 
     // Chart dimensions and margins
-    var marginBar = 20;
-    var wBar = 960;
-    var hBar = 200 - marginBar;
-    var wFullHeight = hBar + marginTimeline;
+    let marginBar = 20;
+    let wBar = 960;
+    let hBar = 200 - marginBar;
+    let wFullHeight = hBar + marginTimeline;
 
 
     // Scales
@@ -27,14 +27,14 @@
     //
     // Main svg - phase chart
     //
-    var svgPhase = d3.select("div#phase")
+    let svgPhase = d3.select("div#phase")
         .append("svg")
         .attr('width', wBar)
         .attr('height', wFullHeight)
         .call(responsiveChart);
 
     // Initialize xAxis
-    var xAxisBar = d3.axisBottom()
+    let xAxisBar = d3.axisBottom()
                   .scale(xScaleBar);
 
     svgPhase.append('g')
@@ -43,12 +43,12 @@
             .call(xAxisBar);
 
     function phaseChart(intialData, colorPhase) {
-      var rectPhases = svgPhase.selectAll('rect')
+      let rectPhases = svgPhase.selectAll('rect')
                         .data(intialData)
                         .enter()
                         .append('rect');
 
-      var attrPhases =  rectPhases.attr('width', wBar / intialData.length - barPadding)
+      let attrPhases =  rectPhases.attr('width', wBar / intialData.length - barPadding)
                                   .attr('height', function(d) {return yScaleBar(d);})
                                   .attr('x', function(i, d){ return d * (wBar / intialData.length);})
                                   .attr('y', function (d) {return hBar - yScaleBar(d);})
@@ -76,7 +76,7 @@
     //radio button
     radioButtons.on('change', function(d) {
         d3.selectAll("rect").remove();
-        var newData = this.value
+        let newData = this.value
 
         if (newData == 'timelineData') {
             updateData(timelineData, colorFillTimeline);

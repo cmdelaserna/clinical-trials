@@ -3,7 +3,7 @@
 
 function responsiveChart(svg) {
     // get container + svg aspect ratio
-    var container = d3.select(svg.node().parentNode),
+    let container = d3.select(svg.node().parentNode),
         width = parseInt(svg.style("width")),
         height = parseInt(svg.style("height")),
         aspect = width / height;
@@ -22,7 +22,7 @@ function responsiveChart(svg) {
 
     // get width of container and resize svg to fit it
     function resize() {
-        var targetWidth = parseInt(container.style("width"));
+        let targetWidth = parseInt(container.style("width"));
         svg.attr("width", targetWidth);
         svg.attr("height", Math.round(targetWidth / aspect));
     }
@@ -63,7 +63,7 @@ function responsiveChart(svg) {
     const colorTimelineRecruiting = d3.scaleLinear().domain([0, timelineRecruitingMax]).range([colorPalette[0], colorPalette[1]]);
 
     // Tooltip
-    var div = d3.select("body")
+    let div = d3.select("body")
                 .append("div") 
                 .attr("class", "tooltip")      
                 .style("opacity", 0);
@@ -71,7 +71,7 @@ function responsiveChart(svg) {
     // Color scales
     // var colorOpacity = d3.scaleLinear().domain([0,maxStripe]).range([.3, 1]);
 
-     var svgTimeline = d3.select("div#svgTimeline")
+     let svgTimeline = d3.select("div#svgTimeline")
                         .append("svg")
                         .attr('width', wTimeline)
                         .attr('height', hTimeline)
@@ -79,7 +79,7 @@ function responsiveChart(svg) {
 
     // d3 chart
          // xAxis
-    var xAxisTimeline = d3.axisBottom()
+    let xAxisTimeline = d3.axisBottom()
                         .scale(xScaletimeline);
 
     svgTimeline.append('g')
@@ -88,12 +88,12 @@ function responsiveChart(svg) {
             .call(xAxisTimeline);
 
     function updateData(newData, colorRamp) {
-        var rectTimeline = svgTimeline.selectAll('rect')
+        let rectTimeline = svgTimeline.selectAll('rect')
                             .data(newData)
                             .enter()
                             .append('rect');
 
-        var attrTimeline = rectTimeline
+        let attrTimeline = rectTimeline
                             .attr('width', wTimeline / newData.length - barPadding)
                             .attr('height', height)
                             // .attr('height', function(d) {return yScaleTimeline(d);})

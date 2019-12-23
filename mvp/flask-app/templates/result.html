@@ -35,6 +35,20 @@
   <link rel="stylesheet" href="../static/css/skeleton.css">
   <link rel="stylesheet" href="../static/css/main.css">
 
+
+<!-- Main data variables
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script>
+
+    // Data 1st chart
+    const timeline = ({{ timeline | safe }});
+    // Data 2nd chart
+    const phase = ({{ phase | safe }});
+    // Query data
+    const data = ({{table | safe}});
+    
+</script>
+
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <!-- <link rel="icon" type="image/png" href="images/favicon.png"> -->
@@ -104,10 +118,9 @@
 <!-- Table: Search results
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
-   <div class="twelve columns" id= 'table'>
-      <p>{{ table|safe }}</p>
+    <table class="u-full-width">
+      <p>{{ table |safe }}</p>
      </div>
-
 
 
 <!-- row -->
@@ -115,17 +128,6 @@
 
 <!-- d3 scripts
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-<script>
-
-    // Data 1st chart
-    const timeline = ({{ timeline | safe }});
-    // Data 2nd chart
-    const phase = ({{ phase | safe }});
-
-    // Query data
-    // const data = ({{data_index | safe}});
-    
-</script>
 
 <script src="{{ url_for('static', filename = 'charts/timeline.js') }}"></script>
 <script src="{{ url_for('static', filename = 'charts/phase.js') }}"></script>
