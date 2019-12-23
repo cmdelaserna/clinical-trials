@@ -36,19 +36,6 @@
   <link rel="stylesheet" href="../static/css/main.css">
 
 
-<!-- Main data variables
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <script>
-
-    // Data 1st chart
-    const timeline = ({{ timeline | safe }});
-    // Data 2nd chart
-    const phase = ({{ phase | safe }});
-    // Query data
-    const data = ({{table | safe}});
-    
-</script>
-
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <!-- <link rel="icon" type="image/png" href="images/favicon.png"> -->
@@ -125,6 +112,19 @@
 
 <!-- row -->
 </div>
+
+<!-- Main data variables
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script>
+
+    // Data 1st chart
+    const timeline = ({{ timeline | safe }});
+    // Data 2nd chart
+    const phase = ({{ phase | safe }});
+    // Query data
+    const data = ({{table | safe}});
+
+</script>s
 
 <!-- d3 scripts
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
