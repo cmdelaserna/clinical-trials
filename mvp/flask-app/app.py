@@ -4,7 +4,7 @@
 #Configuration
 #
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from flask_wtf import FlaskForm
 from sqlalchemy import create_engine
 import pandas as pd
@@ -133,8 +133,7 @@ def search():
 
       return render_template("result.html", 
          data_index = df.to_json(orient = 'index'),
-         # table = table.to_html(header=False),
-         table = table.to_json(),
+         table = table.to_json(orient= 'index'),
          search = search, 
          number = number_results,
          source_number = source_number,
